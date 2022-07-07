@@ -4,6 +4,9 @@ module.exports = {
   semi: true,
   singleQuote: true,
   printWidth: 120,
-  arrowParens: 'avoid',
+  arrowParens: 'always',
   endOfLine: 'auto',
+  bracketSpacing: true,
+  embeddedLanguageFormatting: 'auto',
+  htmlWhitespaceSensitivity: 'css',
 };

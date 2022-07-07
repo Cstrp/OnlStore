@@ -12,7 +12,10 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
-    '@typescript-eslint/no-explicit-any': 2,
+    '@typescript-eslint/no-explicit-any': ['error'],
+    '@typescript-eslint/no-empty-function': 0,
+    '@typescript-eslint/no-inferrable-types': 0,
+    '@typescript-eslint/no-unused-vars': 0,
     'no-debugger': 'off',
     'no-console': 0,
     'class-methods-use-this': 'off',

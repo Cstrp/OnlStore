@@ -1,3 +1,4 @@
 import './root.scss';
+import App from './view/pages/App/App.ts';
 
-console.log('Hello world');
+const app = new App().render();
