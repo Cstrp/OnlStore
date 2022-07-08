@@ -4,18 +4,12 @@ class Home extends Template {
   static TitleObj = {
     title: 'Home',
   };
-  constructor(id: string, className?: string) {
-    super(id);
-    // this.element = document.createElement('div');
-    // this.element.id = id;
-    // if (typeof className === 'string') {
-    //   this.element.classList.add(...className.split(' '));
-    // }
+  constructor(id: string, tag: string, className?: string) {
+    super(id, tag, className);
   }
 
   render() {
-    const title = this.Title(Home.TitleObj.title);
-    // this.element.append(title);
+    this.Title(Home.TitleObj.title);
     return this.element;
   }
 }

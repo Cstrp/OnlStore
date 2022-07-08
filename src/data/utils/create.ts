@@ -1,21 +1,18 @@
-class Create {
-  protected element: HTMLElement;
+type nullOn = string | null | unknown;
+type parentOn = ParentNode | Create;
 
-  constructor(
-    parent: ParentNode | Create,
-    tag: string,
-    classNames: string,
-    value?: string,
-    attr?: Record<string, unknown>
-  ) {
+class Create {
+  element: Element;
+  innerText!: string;
+  href!: string;
+
+  constructor(tag: string, classNames: string, parent?: parentOn, value?: nullOn, attr?: Record<string, unknown>) {
     this.element = document.createElement(tag);
     this.element.classList.add(...classNames.split(' '));
     if (typeof value === 'string') {
       this.element.innerHTML = value;
     }
-    if ('appendChild' in parent) {
-      parent.appendChild(this.element);
-    }
+    parent ? (!(parent instanceof Create) ? parent.appendChild(this.element) : null) : undefined;
     if (attr) {
       for (const key in attr) {
         this.element.setAttribute(key, <string>attr[key]);
@@ -23,8 +20,8 @@ class Create {
     }
   }
 
-  append(element: HTMLElement) {
-    this.element.append(element);
+  append(element: Create | Node | string) {
+    return element ? (!(element instanceof Create) ? this.element.append(element) : null) : undefined;
   }
 }
 
