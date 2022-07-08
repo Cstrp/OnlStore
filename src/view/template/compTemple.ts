@@ -1,4 +1,4 @@
-abstract class CompTempl {
+abstract class CompTemple {
   protected element: HTMLElement;
   static TextObj = {};
 
@@ -18,4 +18,4 @@ abstract class CompTempl {
   }
 }
 
-export default CompTempl;
+export default CompTemple;

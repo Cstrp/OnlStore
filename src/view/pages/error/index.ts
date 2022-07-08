@@ -11,7 +11,8 @@ class Error extends Template {
   }
 
   render() {
-    document.body.classList.add(style.body);
+    const wrapper = new Create('div', style.wrapper, this.element).element;
+    const title = new Create('h1', style.error, wrapper).element;
     return this.element;
   }
 }

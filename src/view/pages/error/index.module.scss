@@ -1,5 +1,12 @@
-.body {
+.wrapper {
   background: black;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
   overflow: hidden;
 }
 
@@ -10,9 +17,6 @@
   color: red;
 }
 
-.body {
-  overflow: hidden;
-}
 
 
 .error:before,
@@ -41,6 +45,8 @@
   text-shadow: -1px solid rgb(0, 0, 0);
   clip: rect(424px, 450px, 526px, 0);
   animation: subglitchText 1.5s infinite linear alternate-reverse;
+  overflow: hidden;
+  
 }
 
 @keyframes subglitchText {

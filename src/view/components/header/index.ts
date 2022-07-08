@@ -1,6 +1,6 @@
 import Create from '../../../data/utils/create';
 import { pageID } from '../../pages/app';
-import CompTempl from '../../template/compTempl';
+import CompTemple from '../../template/compTemple';
 import style from './index.module.scss';
 
 const buttons = [
@@ -9,7 +9,7 @@ const buttons = [
   { id: pageID.recommendation, text: 'Recommendation' },
 ];
 
-class Header extends CompTempl {
+class Header extends CompTemple {
   constructor(id: string, tag: string, className?: string) {
     super(id, tag, className);
   }

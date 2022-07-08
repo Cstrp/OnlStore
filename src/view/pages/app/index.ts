@@ -34,7 +34,7 @@ class App {
     } else if (id === pageID.recommendation) {
       page = new Recommendation(id, 'main');
     } else {
-      page = new Error(id, 'main');
+      page = new Error(id, 'main', style.error_main);
       App.element.innerHTML = '';
     }
     if (page) {
@@ -45,9 +45,10 @@ class App {
   }
 
   constructor() {
+    App.element.classList.add(style.body);
     this.header = new Header(generateId(), 'header', style.header);
-    this.home = new Home(generateId(), 'main');
-    this.footer = new Footer(generateId(), 'footer', 'footer');
+    this.home = new Home(generateId(), 'main', style.main);
+    this.footer = new Footer(generateId(), 'footer', style.footer);
   }
 
   private router() {

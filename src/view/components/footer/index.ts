@@ -1,7 +1,7 @@
 // import Create from '../../../data/utils/create';
-import CompTempl from '../../template/compTempl';
+import CompTemple from '../../template/compTemple';
 
-class Footer extends CompTempl {
+class Footer extends CompTemple {
   constructor(id: string, tag: string, className: string) {
     super(id, tag, className);
   }

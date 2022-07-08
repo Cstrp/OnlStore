@@ -1,0 +1,93 @@
+.section {
+  padding-top: 250px;
+  color: white;
+}
+
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  min-height: 400px;
+  justify-content: space-between;
+  
+  &Title {
+    font: 37px 'Cantarell', serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 37px;
+    align-items: center;
+    text-align: center;
+  }
+  
+  &SubTitle {
+    font: 35px 'Cantarell', Serif;
+    font-weight: 300;
+    line-height: 60px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+  }
+  
+  &Input {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    margin-bottom: 20px;
+  }
+  
+  &InputField {
+    border: 1px solid #b1b1b1;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    padding: 10px 10px;
+    font: 1rem/1.4 "Roboto", sans-serif;
+    background-color: #dbe2ef;
+//    &::placeholder {
+//      background: url("./img/1296902.svg") 15px/20px no-repeat, center;
+//    }
+  }
+  
+  &InputButton {
+    border-radius: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background: #883faf url('./img/1296902.svg') no-repeat center center;
+    transition: opacity 0.3s;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  
+  
+}
+
+
+// (padding-top, padding-right, padding-bottom, padding-left).
+
+
+//.inputPlus {
+//  width: 100%;
+//  display: grid;
+//  grid-template-columns: 1fr 60px;
+//  margin-bottom: 20px;
+//
+//  &Title {
+//    border: 1px solid #b1b1b1;
+//    border-top-left-radius: 5px;
+//    border-bottom-left-radius: 5px;
+//    padding: 10px 10px;
+//    font: 1rem/1.4 'Roboto', sans-serif;
+//    background-color: #dbe2ef;
+//    &::placeholder {
+//      color: #7b7b7b;
+//    }
+//  }
+
+//  }
+//}
