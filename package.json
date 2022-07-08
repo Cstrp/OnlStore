@@ -19,6 +19,7 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode development",
     "dev": "cross-env NODE_ENV=development webpack --mode development",
     "build": "cross-env NODE_ENV=production webpack --mode production",
+    "dead": "ts-node-dev --respawn src/index.ts",
     "deploy": "gh-pages -d dist",
     "clean": "rm -rf dist",
     "lint": "eslint --ext js,jsx,ts,tsx src",
@@ -35,7 +36,6 @@
     "@babel/runtime": "^7.18.6",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
-    "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
@@ -44,16 +44,21 @@
     "gh-pages": "^4.0.0",
     "html-loader": "^3.1.2",
     "html-webpack-plugin": "^5.5.0",
+    "json-to-ts": "^1.7.0",
     "mini-css-extract-plugin": "^2.6.1",
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",
+    "taig": "^1.0.19",
     "ts-loader": "^9.3.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "@types/node": "^18.0.3",
     "normalize.css": "^8.0.1"
   }
 }
