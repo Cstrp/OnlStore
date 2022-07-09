@@ -3,51 +3,18 @@ import Create from '../../../data/utils/create';
 import Template from '../../template/template';
 import style from './index.module.scss';
 
-export interface RootObject {
-  data: RootObjectData[];
-  pagination: RootObjectPagination;
-}
-
-export interface RootObjectDataEntryImagesJpg {
-  image_url: string;
-  small_image_url: string;
-  large_image_url: string;
-}
-
-export interface RootObjectDataEntryImagesWebp {
-  image_url: string;
-  small_image_url: string;
-  large_image_url: string;
-}
-
-export interface RootObjectDataEntryImages {
-  jpg: RootObjectDataEntryImagesJpg;
-  webp: RootObjectDataEntryImagesWebp;
-}
-
-export interface RootObjectDataEntry {
-  mal_id: number;
-  url: string;
-  images: RootObjectDataEntryImages;
-  title: string;
-}
-
-export interface RootObjectDataUser {
-  url: string;
-  username: string;
-}
-
-export interface RootObjectData {
-  mal_id: string;
-  entry: RootObjectDataEntry[];
-  content: string;
-  user: RootObjectDataUser;
-}
-
-export interface RootObjectPagination {
-  last_visible_page: number;
-  has_next_page: boolean;
-}
+const insertionSort = (arr: []): [] => {
+  for (let i = 1, l = arr.length; i < l; i++) {
+    const current = arr[i];
+    let j = i;
+    while (j > 0 && arr[j - 1] > current) {
+      arr[j] = arr[j - 1];
+      j--;
+    }
+    arr[j] = current;
+  }
+  return arr;
+};
 
 class Recommendation extends Template {
   static TitleObj = {
@@ -60,53 +27,56 @@ class Recommendation extends Template {
   }
 
   content() {
-    const wrapper = new Create('div', style.wrapper, this.element).element;
-    // wrapper.addEventListener('click', () => {
-    //   fetchData();
-    // });
-    const fetchData = async () => {
-      const responce = await axios.get('https://api.jikan.moe/v4/recommendations/manga?=&limit=10');
-      Object.keys(responce.data.data).forEach((key) => {
-        const data = responce.data.data[key];
-        const title = data.entry[0].title;
-        const url = data.entry[0].url;
-        const image = data.entry[0].images.jpg.image_url;
-        const user = data.user.username;
-        const content = data.content;
-        const card = new Create('div', style.recommendationCard, wrapper).element;
+    const section = new Create('section', style.recommendationSection, this.element).element;
+    const wrapper = new Create('div', style.wrapper, section).element;
+    const recTitleWrapper = new Create('div', style.recommendationTitleWrapper, wrapper).element;
+    const decor = new Create('div', style.recommendationTitleWrapperDecor, recTitleWrapper).element;
+    const recTitle = new Create('h1', 'asd', recTitleWrapper, 'Featured Manga').element;
+    const recSubTitle = new Create(
+      'p',
+      '1234',
+      recTitleWrapper,
+      'Find out what are the best manga  anime and series here'
+    ).element;
+    const sectionWrapper = new Create('div', style.RecommendationWrapper, wrapper).element;
+    const fetchData: () => Promise<void> = async () => {
+      const response = await axios.get('https://api.jikan.moe/v4/recommendations/manga'); ///anime?limit=10&q=
+      const data = insertionSort(response.data.data);
+      Object.keys(data).forEach((key) => {
+        const data = response.data.data[key];
+        // const title = data.entry[0].title;
+        const card = new Create('div', style.recommendationCard, sectionWrapper).element;
         const cardImg = new Create('div', style.recommendationCardImg, card).element;
-        const img = new Create('img', 'card-img', cardImg, null, { src: `${image}`, alt: `${title}` }).element;
-        const cardContent = new Create('div', 'recommendation-card-content', card).element;
-        const cardContentTitle = new Create('div', 'recommendation-card-content-title', cardContent).element;
-        const cardLink = new Create('a', '1', cardContentTitle, `${title}`, { href: `${url}` }).element;
-        const recCardUser = new Create('div', 'recommendation-card-content-user', card).element;
-        const recCardUserLink = new Create('a', '123', recCardUser, `${user}`, {
-          href: `https://myanimelist.net/profile/${user}`,
-        });
-        const recCardAnyContent = new Create('div', 'recommendation-card-content-content', card, `${content}`).element;
+        const img = new Create('img', style.cardImg, cardImg, null, {
+          src: `${data.entry[0].images.jpg.image_url}`,
+          alt: `${data.entry[0].title}`,
+        }).element;
+        const cardContent = new Create('div', style.recommendationCardContent, card).element;
+        const cardContentTitle = new Create('h2', style.recommendationCardContentTitle, cardContent).element;
+        const cardLink = new Create('a', style.recommendationCardLink, cardContentTitle, `${data.entry[0].title}`, {
+          href: `${data.entry[0].url}`,
+        }).element;
+        const recCardUser = new Create('div', style.recommendationCardContentUser, card).element;
+        const recCardUserLink = new Create(
+          'a',
+          style.recommendationCardLink,
+          recCardUser,
+          `User: ${data.user.username}`,
+          {
+            href: `https://myanimelist.net/profile/${data.user.username}`,
+          }
+        );
+        const recCardAnyContent = new Create(
+          'div',
+          style.recommendationCardContentText,
+          card,
+          `Description:<br/>${data.content}`
+        ).element;
       });
     };
     fetchData();
 
-    // `<div class="recommendation-card">
-    //         <div class="recommendation-card-image">
-    //           <img src="${image}" alt="${title}">
-    //         </div>
-    //         <div class="recommendation-card-content">
-    //           <div class="recommendation-card-content-title">
-    //             <a href="${url}">${title}</a>
-    //           </div>
-    //           <div class="recommendation-card-content-user">
-    //             <a href="https://myanimelist.net/profile/${user}">${user}</a>
-    //           </div>
-    //           <div class="recommendation-card-content-content">
-    //             ${content}
-    //           </div>
-    //         </div>
-    //       </div>`;
-    // datas.append(html);
-
-    this.element.append(wrapper);
+    this.element.append(section);
   }
 
   render() {
@@ -117,18 +87,3 @@ class Recommendation extends Template {
 }
 
 export default Recommendation;
-
-// const Taig = new taig('https://api.jikan.moe/v4/manga/1/full'); // https://api.jikan.moe/v4/magazines  https://api.jikan.moe/v4/manga/2/full
-//
-// const Manga = Taig.gen({ name: 'Manga', path: '?q=&limit=5' });
-// const fetchData = async () => {
-//   try {
-//     const { data }: { data: Manga } = await Manga.method('GET');
-//     console.log(data.data);
-//     // const { authors, background, demographics, images } = data.data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-//
-// fetchData();

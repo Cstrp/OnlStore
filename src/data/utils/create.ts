@@ -3,8 +3,6 @@ type parentOn = ParentNode | Create;
 
 class Create {
   element: Element;
-  innerText!: string;
-  href!: string;
 
   constructor(tag: string, classNames: string, parent?: parentOn, value?: nullOn, attr?: Record<string, unknown>) {
     this.element = document.createElement(tag);

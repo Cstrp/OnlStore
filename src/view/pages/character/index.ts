@@ -5,6 +5,7 @@ class Character extends Template {
     title: 'Character',
     subTitle: 'Browse all your favorite Manga characters, and view their rankings in realtime',
   };
+
   constructor(id: string, tag: string, className?: string) {
     super(id, tag, className);
   }
