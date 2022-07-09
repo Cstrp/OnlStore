@@ -3,7 +3,7 @@ import Create from '../../../data/utils/create';
 import Template from '../../template/template';
 import style from './index.module.scss';
 
-const insertionSort = (arr: []): [] => {
+export const insertionSort = (arr: []): [] => {
   for (let i = 1, l = arr.length; i < l; i++) {
     const current = arr[i];
     let j = i;
@@ -31,10 +31,11 @@ class Recommendation extends Template {
     const wrapper = new Create('div', style.wrapper, section).element;
     const recTitleWrapper = new Create('div', style.recommendationTitleWrapper, wrapper).element;
     const decor = new Create('div', style.recommendationTitleWrapperDecor, recTitleWrapper).element;
-    const recTitle = new Create('h1', 'asd', recTitleWrapper, 'Featured Manga').element;
+    const recTitle = new Create('h1', style.recommendationTitleWrapperDecorH1, recTitleWrapper, 'Featured Manga')
+      .element;
     const recSubTitle = new Create(
       'p',
-      '1234',
+      style.recommendationTitleWrapperDecorP,
       recTitleWrapper,
       'Find out what are the best manga  anime and series here'
     ).element;
@@ -44,7 +45,6 @@ class Recommendation extends Template {
       const data = insertionSort(response.data.data);
       Object.keys(data).forEach((key) => {
         const data = response.data.data[key];
-        // const title = data.entry[0].title;
         const card = new Create('div', style.recommendationCard, sectionWrapper).element;
         const cardImg = new Create('div', style.recommendationCardImg, card).element;
         const img = new Create('img', style.cardImg, cardImg, null, {
