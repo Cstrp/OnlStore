@@ -10,6 +10,7 @@
 .recommendationTitleWrapper {
   color: white;
   position: relative;
+  
   &Decor {
     position: absolute;
     left: -35px;
@@ -19,13 +20,16 @@
     background: #FF4B77;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     transition: .3s;
-    &:hover{
+    
+    &:hover {
       top: -35px;
     }
   }
+  
   &DecorTitle {
     color: white;
   }
+  
   &DecorH1 {
     font-family: 'Cantarell Thin';
     font-weight: 700;
@@ -56,6 +60,9 @@
   gap: 47.57px;
   justify-content: space-between;
   padding-top: 85px;
+  @media screen and (max-width: 570px) {
+    justify-content: center;
+  }
 }
 
 // (padding-top, padding-right, padding-bottom, padding-left).
@@ -114,7 +121,7 @@
     color: #FFFFFF;
   }
   
-  .recommendationCardContentTitle{
+  .recommendationCardContentTitle {
     font-family: 'Cantarell Thin';
     font-weight: 700;
     font-size: 14px;
@@ -122,6 +129,7 @@
     letter-spacing: 0.05em;
     color: #FFFFFF;
   }
+  
   .recommendationCardContentUser {
     display: flex;
     text-align: justify;

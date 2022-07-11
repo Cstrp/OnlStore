@@ -28,6 +28,7 @@ class Header extends CompTemple {
         href: `#${btn.id}`,
       }).element;
     });
+
     wrapper.append(headerWrapper);
   }
 

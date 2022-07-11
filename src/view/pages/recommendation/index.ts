@@ -1,24 +1,12 @@
 import axios from 'axios';
 import Create from '../../../data/utils/create';
+import { insertionSort } from '../../../data/utils/sort';
 import Template from '../../template/template';
 import style from './index.module.scss';
 
-export const insertionSort = (arr: []): [] => {
-  for (let i = 1, l = arr.length; i < l; i++) {
-    const current = arr[i];
-    let j = i;
-    while (j > 0 && arr[j - 1] > current) {
-      arr[j] = arr[j - 1];
-      j--;
-    }
-    arr[j] = current;
-  }
-  return arr;
-};
-
 class Recommendation extends Template {
   static TitleObj = {
-    title: 'Recommendation',
+    title: 'Small selection from our favorite users',
     subTitle: 'Browse your Manga recommendation, and view their rankings in realtime',
   };
 
@@ -80,7 +68,7 @@ class Recommendation extends Template {
   }
 
   render() {
-    this.Title(Recommendation.TitleObj.title, Recommendation.TitleObj.subTitle);
+    this.Content(Recommendation.TitleObj.title, Recommendation.TitleObj.subTitle);
     this.content();
     return this.element;
   }

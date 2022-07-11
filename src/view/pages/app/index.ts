@@ -9,15 +9,14 @@ import Recommendation from '../recommendation';
 import style from './index.module.scss';
 
 export const enum pageID {
-  home = 'home',
-  characters = 'characters',
-  recommendation = 'recommendation',
+  home = '/home',
+  characters = '/characters',
+  recommendation = '/recommendation',
 }
 
 class App {
   private static element: HTMLElement = document.body;
   private static defaultPageID: string = 'defaultID';
-  private home: Home;
   private header: Header;
   private footer: Footer;
 
@@ -27,42 +26,69 @@ class App {
       defaultPage.remove();
     }
     let page: Template | null;
-    if (id === pageID.home) {
-      page = new Home(id, 'main');
-    } else if (id === pageID.characters) {
-      page = new Character(id, 'main');
-    } else if (id === pageID.recommendation) {
-      page = new Recommendation(id, 'main');
-    } else {
-      page = new Error(id, 'main', style.error_main);
-      App.element.innerHTML = '';
+    switch (id) {
+      case pageID.home:
+        page = new Home(generateId(), 'main', style.home);
+        break;
+      case pageID.characters:
+        page = new Character(generateId(), 'main', style.characters);
+        break;
+      case pageID.recommendation:
+        page = new Recommendation(generateId(), 'main', style.recommendation);
+        break;
+      default:
+        page = new Home(generateId(), 'main', style.main);
+        break;
     }
     if (page) {
-      const pageHTML = page.render();
-      pageHTML.id = App.defaultPageID;
-      App.element.append(pageHTML);
+      const HTML = page.render();
+      HTML.id = App.defaultPageID;
+      App.element.append(HTML);
     }
   }
 
   constructor() {
-    App.element.classList.add(style.body);
     this.header = new Header(generateId(), 'header', style.header);
-    this.home = new Home(generateId(), 'main', style.main);
+    App.element.classList.add(style.body);
     this.footer = new Footer(generateId(), 'footer', style.footer);
   }
 
   private router() {
     window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '/').slice(1);
+      if (hash !== pageID.home && hash !== pageID.characters && hash !== pageID.recommendation) {
+        const error = new Error(generateId(), 'main', style.error);
+        App.element.append(error.render());
+      } else {
+        App.renderPage(hash);
+      }
+    });
+  }
+
+  private StoragePage() {
+    const storage = localStorage.getItem('page');
+    if (storage) {
+      App.renderPage(storage);
+    } else {
+      App.renderPage(App.defaultPageID);
+    }
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('page', window.location.hash.slice(1));
+    });
+    window.addEventListener('load', () => {
       const hash = window.location.hash.slice(1);
       App.renderPage(hash);
     });
   }
 
   render() {
+    this.router();
+    this.StoragePage();
     App.element.append(this.header.render());
     App.renderPage(pageID.home);
-    App.element.append(this.footer.render());
-    this.router();
+    setTimeout(() => {
+      App.element.append(this.footer.render());
+    }, 2345);
   }
 }
 

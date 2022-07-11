@@ -1,6 +1,5 @@
 .section {
   padding-top: 250px;
-  color: white;
 }
 
 .wrapper {
@@ -15,22 +14,28 @@
   position: relative;
   
   &Title {
-    font: 37px 'Cantarell', serif;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 30px;
+    color: #dbe2ef;
+    font: 42px 'Cantarell', serif;
     line-height: 37px;
-    align-items: center;
-    text-align: center;
+    transition: .3s;
+    cursor: crosshair;
+    
+    &:hover {
+      opacity: 0.65;
+    }
   }
   
   &SubTitle {
-    font: 35px 'Cantarell', Serif;
-    font-weight: 300;
+    font: 34px 'Cantarell', Serif;
     line-height: 60px;
-    text-align: center;
     letter-spacing: 0.05em;
-    color: #FFFFFF;
+    color: #dbe2ef;
+    transition: .3s;
+    cursor: crosshair;
+    
+    &:hover {
+      opacity: 0.65;
+    }
   }
   
   &Input {
@@ -74,3 +79,23 @@
     background-color: rgba(0, 222, 204, 0.20);
   }
 }
+
+
+.up {
+  position: relative;
+  
+  &Img {
+    position: fixed;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    cursor: crosshair;
+    &:hover {
+      opacity: .75;
+    }
+  }
+  &Link {
+    scroll-behavior: smooth;
+  }
+}
+

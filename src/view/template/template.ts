@@ -5,7 +5,6 @@ import axios from 'axios';
 abstract class Template {
   protected element: HTMLElement;
   protected input!: HTMLInputElement;
-
   static TextContent = {};
 
   protected constructor(id: string, tag: string, className?: string) {
@@ -16,7 +15,18 @@ abstract class Template {
     }
   }
 
-  protected Title(text: string, subtext?: string) {
+  protected Content(text: string, subtext?: string) {
+    const up: HTMLDivElement = new Create('div', style.up, this.element).element;
+    const upLink: HTMLLinkElement = new Create('a', style.upLink, up).element;
+    upLink.addEventListener('click', (evt: MouseEvent) => {
+      evt.preventDefault();
+      this.input.focus();
+    });
+    const imgUP: HTMLImageElement = new Create('img', style.upImg, upLink, null, {
+      src: 'https://i.pinimg.com/originals/80/7b/5c/807b5c4b02e765bb4930b7c66662ef4b.gif',
+      title: 'Up! Meow!',
+      alt: 'lol',
+    }).element;
     const section: Element = new Create('section', style.section, this.element).element;
     const wrapper: HTMLElement = new Create('article', style.wrapper, section).element;
     const title: HTMLElement = new Create('h2', style.wrapperTitle, wrapper, text).element;
@@ -25,7 +35,6 @@ abstract class Template {
     this.input = new Create('input', style.wrapperInputField, inputWrapper, null, {
       placeholder: 'Type your text here...',
       type: 'text',
-      autocomplete: 'on',
     }).element;
     this.input.addEventListener('keypress', (evt: KeyboardEvent) => {
       const searchData: () => Promise<void> = async () => {
@@ -39,9 +48,8 @@ abstract class Template {
               const container = new Create('div', style.wrapperResult, wrapper).element;
               const card = new Create('div', '123', container).element;
               Object.keys(data).forEach((key) => {
-                const data = response.data.data[key];
+                const data: Record<string, unknown> = response.data.data[key];
                 const title = new Create('p', '123', card, data.title, { style: 'color: black' }).element;
-                
               });
             });
         } catch (error) {
@@ -49,7 +57,7 @@ abstract class Template {
         }
       };
       if (evt.key === 'Enter') {
-        searchData();
+        searchData().then((r) => console.log(r));
       }
     });
     const button: HTMLElement = new Create('button', style.wrapperInputButton, inputWrapper, null, { type: 'submit' })

@@ -1,12 +1,12 @@
 import axios from 'axios';
 import Create from '../../../data/utils/create';
+import { insertionSort } from '../../../data/utils/sort';
 import Template from '../../template/template';
-import { insertionSort } from '../recommendation';
 import style from './index.module.scss';
 
 class Character extends Template {
   static TitleObj = {
-    title: 'Character',
+    title: 'This is a holy of saints anime and manga characters',
     subTitle: 'Browse all your favorite Manga characters, and view their rankings in realtime',
   };
 
@@ -34,16 +34,13 @@ class Character extends Template {
       const data = insertionSort(resp.data.data);
       Object.keys(data).forEach((key) => {
         const data = resp.data.data[key];
-        const test = data.images.jpg;
         const card = new Create('div', style.characterCard, sectionWrapper).element;
         const cardImg = new Create('div', style.characterCardImg, card).element;
+        const name = new Create('p', style.japanAmazing, cardImg, `${data.name_kanji}`).element;
         const img = new Create('img', style.cardImg, cardImg, null, {
           src: `${data.images.jpg.image_url}`,
           alt: `${data.name}`,
         });
-
-        const name = new Create('p', style.japanAmazing, cardImg, `${data.name_kanji}`).element;
-        // const nickname = new Create('p', style.japanAmazing, cardImg, `${data.nicknames}`).element;
 
         const cardContent = new Create('div', style.characterCardContent, card).element;
         const cardContentTitle = new Create('h2', style.characterCardContentTitle, cardContent).element;
@@ -51,19 +48,14 @@ class Character extends Template {
           href: `${data.url}`,
         }).element;
         const aboutContent = new Create('div', style.characterCardContent, card).element;
-        const content = new Create(
-          'div',
-          style.characterCardContentText,
-          aboutContent,
-          `Description: <br/>${data.about}`
-        );
+        const content = new Create('div', style.characterCardContentText, aboutContent, `${data.about}`);
       });
     };
     fetchData();
   }
 
   render() {
-    this.Title(Character.TitleObj.title, Character.TitleObj.subTitle);
+    this.Content(Character.TitleObj.title, Character.TitleObj.subTitle);
     this.content();
     return this.element;
   }

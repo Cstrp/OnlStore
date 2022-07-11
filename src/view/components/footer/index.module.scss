@@ -1,0 +1,63 @@
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.footerWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: center;
+  text-align: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding-top: 40px;
+  @media screen and (max-width: 760px) {
+    justify-content: center;
+    gap: 20px;
+    flex-direction: column;
+  }
+  
+  &Logo {
+    --c: rgba(127, 3, 176, 0.25);
+    padding: 15px 15px 15px 15px;
+    border: 5px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to left, rgb(255, 255, 255, 0.15), rgba(127, 3, 176, 0.7));
+    background: linear-gradient(90deg, rgba(2, 9, 36, 0.25) 50%, var(--c) 0) calc(10% - var(--_p,0%))/100%,
+    linear-gradient(var(--c) 0 0) 0% 10%/var(--_p,0%) no-repeat,
+    var(--_c, #0000);
+    -webkit-background-clip: text, padding-box, padding-box;
+    transition: 0s, background-color .5s;
+    
+    &:hover {
+      --_c: var(--c);
+      --_p: 100%;
+      transition: 0.5s, background-color 0s .5s;
+    }
+  }
+  
+  &LogoLink {
+    color: white;
+  }
+  
+  &LogoTitle {
+    font: 1.7em "Cantarell", sans-serif;
+    text-transform: uppercase;
+  }
+  
+  &LogoImg {
+    max-width: 350px;
+  }
+  
+  .footerWrapperLogoRSImg {
+    color: white;
+    width: 100%;
+  }
+}

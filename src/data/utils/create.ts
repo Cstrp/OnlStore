@@ -1,5 +1,5 @@
-type nullOn = string | null | unknown;
-type parentOn = ParentNode | Create;
+export type nullOn = string | null | unknown;
+export type parentOn = ParentNode | Create;
 
 class Create {
   element: Element;
@@ -20,6 +20,10 @@ class Create {
 
   append(element: Create | Node | string) {
     return element ? (!(element instanceof Create) ? this.element.append(element) : null) : undefined;
+  }
+
+  remove(element = this.element) {
+    return element ? (!(element instanceof Create) ? this.element.remove() : null) : undefined;
   }
 }
 

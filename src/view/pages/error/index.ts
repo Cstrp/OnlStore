@@ -12,7 +12,8 @@ class Error extends Template {
 
   render() {
     const wrapper = new Create('div', style.wrapper, this.element).element;
-    const title = new Create('h1', style.error, wrapper).element;
+    const title = new Create('h1', style.error, wrapper, '404:   Error! Page is not found...').element;
+    wrapper.append(title);
     return this.element;
   }
 }
