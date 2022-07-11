@@ -18,14 +18,10 @@ class Home extends Template {
     const section = new Create('section', style.section, this.element).element;
     const wrapper = new Create('div', style.wrapper, section).element;
     const titleWrapper = new Create('div', style.tittleWrapper, wrapper).element;
-    const decor = new Create('div', style.tittleWrapperDecor, titleWrapper).element;
-    const title = new Create('h2', style.tittleWrapperTitle, titleWrapper, 'The best manga for every day').element;
-    const subTitle = new Create(
-      'p',
-      style.tittleWrapperSubTitle,
-      titleWrapper,
-      'All the best manga collected for you in one place'
-    ).element;
+    new Create('div', style.tittleWrapperDecor, titleWrapper).element;
+    new Create('h2', style.tittleWrapperTitle, titleWrapper, 'The best manga for every day').element;
+    new Create('p', style.tittleWrapperSubTitle, titleWrapper, 'All the best manga collected for you in one place')
+      .element;
     const contentWrapper = new Create('div', style.contentWrapper, wrapper).element;
     const fetchData: () => Promise<void> = async () => {
       try {
@@ -40,12 +36,33 @@ class Home extends Template {
               return arr.filter((el, id: number) => arr.indexOf(el) === id);
             };
             const dt = makeUniq(data);
-            const content = dt.map((el) => {
-              const img = el.images.jpg.image_url;
-              const auth = el.authors[0].name;
-              console.log(auth);
-              console.log(img);
-              const title = new Create('h2', '123', contentWrapper, `${el.title}`).element;
+            dt.map((el) => {
+              const card = new Create('div', style.card, contentWrapper).element;
+              const cardItem = new Create('div', style.cardItem, card).element;
+              const cardLink = new Create('a', style.cardLink, cardItem, null, { href: `${el.url}` }).element;
+              new Create('h2', style.cardTitle, cardLink, `${el.title}`).element;
+              new Create('img', style.cardImg, cardItem, null, {
+                src: `${el.images.jpg.image_url}`,
+                alt: `${el.authors[0].name}`,
+              }).element;
+              const content = new Create('div', style.cardContent, card).element;
+              const genre = new Create('div', style.cardContentGenre, content, null).element;
+              const genreContent = new Create('div', style.cardContentGenreOther, genre).element;
+              const otherContent = new Create('div', style.cardContentGenreOther, genre).element;
+              new Create('p', style.cardContentP, genreContent, `${el.title_japanese}`);
+              const genreLink = new Create('a', style.cardContentP, genreContent, null, {
+                href: `${el.authors[0].url}`,
+              }).element;
+              new Create('p', style.cardContentP, genreLink, `Author: ${el.authors[0].name}`).element;
+              new Create('p', style.cardContentP, genreContent, `Genre: ${el.genres[0].name}`).element;
+              new Create('p', style.cardContentP, otherContent, `Rating: ${el.score}`).element;
+              new Create('p', style.cardContentP, otherContent, `Add to favorites: ${el.favorites}`).element;
+              const text = new Create('div', style.cardContentText, content).element;
+              new Create('p', style.cardContentP, text, `${el.background}`).element;
+              new Create('p', style.cardContentP, text, `${el.synopsis}`).element;
+              const btnWrapper = new Create('div', style.cardBtn, card).element;
+              new Create('button', style.cardBtnBtn, btnWrapper, `Add to cart`).element;
+              new Create('button', style.cardBtnBtn, btnWrapper, `Add to favorite`).element;
             });
           });
       } catch (err) {

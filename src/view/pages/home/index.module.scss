@@ -50,4 +50,108 @@
   gap: 47.57px;
   justify-content: space-between;
   padding-top: 85px;
+  overflow-x: hidden;
+  
+}
+
+.card {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 15px 15px 15px;
+  box-shadow: 0px 10px 10px rgba(0, 222, 204, 0.25);
+  
+  &Item {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  &Img {
+    max-width: 340px;
+    max-height: 485px;
+  }
+  
+  &Link {
+    color: white;
+  }
+  
+  &Title {
+    font: 700 34px "Cantarell Thin", Serif;
+    line-height: 35px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    transition: .3s;
+    
+    &:hover {
+      color: rgba(255, 255, 255, 0.7);
+      opacity: 0.75;
+    }
+  }
+  
+  &Btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    gap: 20px;
+    
+    &Btn {
+      text-transform: uppercase;
+      background-color: #7f03b0;
+      padding: 10px 10px 10px 10px;
+    }
+  }
+}
+
+.cardContent {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 10px 10px 10px;
+  
+  
+  &Genre {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    color: white;
+    padding: 5px 5px 5px 5px;
+    
+    &Other {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      justify-content: center;
+    }
+  }
+  
+  &P {
+    font: 1.2vw "Roboto Thin", sans-serif;
+    color: white;
+    text-align: justify;
+  }
+  
+  &Text {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 15px 15px 15px;
+    gap: 20px;
+    text-align: justify;
+  }
+}
+
+
+a {
+  text-decoration: none;
 }

@@ -16,13 +16,11 @@ class Character extends Template {
 
   content() {
     const section = new Create('section', style.characterSection, this.element).element;
-
     const wrapper = new Create('div', style.wrapper, section).element;
     const charTitleWrap = new Create('div', style.characterTitleWrapper, wrapper).element;
-    const decor = new Create('div', style.characterTitleWrapperDecor, charTitleWrap).element;
-    const charTitle = new Create('h1', style.characterTitleWrapperDecorH1, charTitleWrap, 'Featured manga persons')
-      .element;
-    const subTitle = new Create(
+    new Create('div', style.characterTitleWrapperDecor, charTitleWrap).element;
+    new Create('h1', style.characterTitleWrapperDecorH1, charTitleWrap, 'Featured manga persons').element;
+    new Create(
       'p',
       style.characterTitleWrapperDecorP,
       charTitleWrap,
@@ -36,19 +34,19 @@ class Character extends Template {
         const data = resp.data.data[key];
         const card = new Create('div', style.characterCard, sectionWrapper).element;
         const cardImg = new Create('div', style.characterCardImg, card).element;
-        const name = new Create('p', style.japanAmazing, cardImg, `${data.name_kanji}`).element;
-        const img = new Create('img', style.cardImg, cardImg, null, {
+        new Create('p', style.japanAmazing, cardImg, `${data.name_kanji}`).element;
+        new Create('img', style.cardImg, cardImg, null, {
           src: `${data.images.jpg.image_url}`,
           alt: `${data.name}`,
         });
 
         const cardContent = new Create('div', style.characterCardContent, card).element;
         const cardContentTitle = new Create('h2', style.characterCardContentTitle, cardContent).element;
-        const cardLink = new Create('a', style.characterCardLink, cardContentTitle, `${data.name}`, {
+        new Create('a', style.characterCardLink, cardContentTitle, `${data.name}`, {
           href: `${data.url}`,
         }).element;
         const aboutContent = new Create('div', style.characterCardContent, card).element;
-        const content = new Create('div', style.characterCardContentText, aboutContent, `${data.about}`);
+        new Create('div', style.characterCardContentText, aboutContent, `${data.about}`);
       });
     };
     fetchData();

@@ -22,15 +22,15 @@ abstract class Template {
       evt.preventDefault();
       this.input.focus();
     });
-    const imgUP: HTMLImageElement = new Create('img', style.upImg, upLink, null, {
+    new Create('img', style.upImg, upLink, null, {
       src: 'https://i.pinimg.com/originals/80/7b/5c/807b5c4b02e765bb4930b7c66662ef4b.gif',
       title: 'Up! Meow!',
       alt: 'lol',
     }).element;
     const section: Element = new Create('section', style.section, this.element).element;
     const wrapper: HTMLElement = new Create('article', style.wrapper, section).element;
-    const title: HTMLElement = new Create('h2', style.wrapperTitle, wrapper, text).element;
-    const SubTitle: HTMLElement = new Create('p', style.wrapperSubTitle, wrapper, subtext).element;
+    new Create('h2', style.wrapperTitle, wrapper, text).element;
+    new Create('p', style.wrapperSubTitle, wrapper, subtext).element;
     const inputWrapper: HTMLElement = new Create('div', style.wrapperInput, wrapper).element;
     this.input = new Create('input', style.wrapperInputField, inputWrapper, null, {
       placeholder: 'Type your text here...',
@@ -49,7 +49,7 @@ abstract class Template {
               const card = new Create('div', '123', container).element;
               Object.keys(data).forEach((key) => {
                 const data: Record<string, unknown> = response.data.data[key];
-                const title = new Create('p', '123', card, data.title, { style: 'color: black' }).element;
+                new Create('p', '123', card, data.title, { style: 'color: black' }).element;
               });
             });
         } catch (error) {
