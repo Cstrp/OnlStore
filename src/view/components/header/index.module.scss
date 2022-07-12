@@ -18,6 +18,10 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding-top: 36px;
+  @media screen and (max-width: 485px) {
+    justify-content: center;
+    gap: 15px;
+  }
   
   &Logo {
     --c: rgba(127, 3, 176, 0.25);
@@ -98,10 +102,32 @@
   }
 }
 
-li {
-  list-style: none;
+.btnWrap {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  
+  &Btn {
+    display: flex;
+    text-align: center;
+    padding: 10px 10px 10px 10px;
+    font: 22px "Cantarell Thin", sans-serif;
+    line-height: 22px;
+    letter-spacing: 0.05em;
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+    
+    &:first-child:hover {
+      opacity: 0.85;
+    }
+    
+    &:last-child {
+      border: 5px solid;
+      border-image-slice: 1;
+      border-image-source: linear-gradient(to left, rgb(255, 255, 255, 0.15), rgba(127, 3, 176, 0.7));
+    }
+  }
 }
 
-a {
-  text-decoration: none;
-}

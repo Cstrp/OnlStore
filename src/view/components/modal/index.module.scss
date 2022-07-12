@@ -1,0 +1,39 @@
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  
+  .modalWrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: center;
+    text-align: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding-top: 36px;
+    @media screen and (max-width: 485px) {
+      justify-content: center;
+      gap: 15px;
+    }
+  }
+  
+  .modalWrapperHeader {
+    color: white;
+    
+    &Title {
+      font-family: "Cantarell", serif;
+      font-size: 22px;
+      line-height: 22px;
+      letter-spacing: 0.05em;
+    }
+  }
+  
+  .modalWrapperBody {
+    color: white;
+  }
+}

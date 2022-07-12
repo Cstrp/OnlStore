@@ -6,10 +6,11 @@
 
 .header {
   padding-bottom: 20px;
-  z-index: 10;
+  position: relative;
 }
 
 .footer {
   padding-bottom: 20px;
+  position: relative;
   z-index: 10;
 }

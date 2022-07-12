@@ -2,14 +2,11 @@ abstract class CompTemple {
   protected element: HTMLElement;
   static TextObj = {};
 
-  protected constructor(id: string, tag: string, className?: string, value?: string) {
+  protected constructor(id: string, tag: string, className?: string) {
     this.element = document.createElement(tag);
     this.element.id = id;
     if (typeof className === 'string') {
       this.element.classList.add(...className.split(' '));
-    }
-    if (typeof value === 'string') {
-      this.element.innerHTML = value;
     }
   }
 

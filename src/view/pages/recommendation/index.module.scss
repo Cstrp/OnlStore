@@ -55,8 +55,7 @@
 
 .RecommendationWrapper {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   gap: 25px;
   justify-content: space-between;
   padding-top: 85px;
@@ -65,7 +64,6 @@
   }
 }
 
-// (padding-top, padding-right, padding-bottom, padding-left).
 .recommendationCard {
   max-width: 250px;
   min-height: 400px;
@@ -78,12 +76,11 @@
   padding: 0 5px 10px 5px;
   box-shadow: 0px 10px 10px rgba(0, 222, 204, 0.25);
   
+  
   .recommendationCardImg {
     width: 100%;
     
     .cardImg {
-      width: 240px;
-      max-height: 285px;
       filter: drop-shadow(0px 5px 30px rgba(0, 222, 204, 0.25));
       border-radius: 15px;
     }

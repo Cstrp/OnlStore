@@ -1,5 +1,5 @@
 export type nullOn = string | null | unknown;
-export type parentOn = ParentNode | Create;
+export type parentOn = ParentNode | Create | null;
 
 class Create {
   element: Element;

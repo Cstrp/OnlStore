@@ -1,3 +1,4 @@
+import create from '../../../data/utils/create';
 import Create from '../../../data/utils/create';
 import { pageID } from '../../pages/app';
 import CompTemple from '../../template/compTemple';
@@ -15,21 +16,22 @@ class Header extends CompTemple {
   }
 
   headerContent() {
-    const wrapper = new Create('div', style.wrapper, this.element);
+    const wrapper = new Create('div', style.wrapper, this.element).element;
     const headerWrapper = new Create('div', style.headerWrapper, wrapper).element;
     const headerLogo = new Create('div', style.headerWrapperLogo, headerWrapper).element;
     const headerLogoLink = new Create('a', style.headerWrapperLogoLink, headerLogo, null, { href: '/' }).element;
-    const headerLogoTitle = new Create('h2', style.headerWrapperLogoTitle, headerLogoLink, 'Manga Store').element;
+    new Create('h2', style.headerWrapperLogoTitle, headerLogoLink, 'Manga Store').element;
     const headerNav = new Create('nav', style.headerWrapperNav, headerWrapper).element;
     const headerList = new Create('ul', style.headerWrapperNavList, headerNav).element;
     buttons.forEach((btn) => {
       const headerListItem = new Create('li', style.headerWrapperNavListItem, headerList).element;
-      const btnLink = new Create('a', style.headerWrapperNavListItemLink, headerListItem, `${btn.text}`, {
+      new Create('a', style.headerWrapperNavListItemLink, headerListItem, `${btn.text}`, {
         href: `#${btn.id}`,
       }).element;
     });
-
-    wrapper.append(headerWrapper);
+    const btnWrap = new Create('div', style.btnWrap, headerWrapper).element;
+    new Create('div', style.btnWrapBtn, btnWrap, 'Login In').element;
+    new Create('div', style.btnWrapBtn, btnWrap, 'Sign Up').element;
   }
 
   render(): HTMLElement {

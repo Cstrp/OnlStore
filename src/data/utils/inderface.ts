@@ -6,7 +6,7 @@ export interface RootObject {
 export interface Datum {
   end_date: number;
   start_date: number;
-  image_url: any;
+  image_url: string;
   mal_id: number;
   url: string;
   images: Images;
@@ -32,7 +32,7 @@ export interface Datum {
   authors: Author[];
   serializations: Author[];
   genres: Author[];
-  explicit_genres: any[];
+  explicit_genres: string[];
   themes: Author[];
   demographics: Author[];
 }
