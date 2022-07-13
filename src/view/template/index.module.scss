@@ -72,11 +72,59 @@
   &Result {
     position: absolute;
     display: flex;
+    flex-flow: row wrap;
+    border-radius: 10px;
     flex: 1 0 auto;
     top: 410px;
-    width: 1440px;
-    height: 350px;
+    max-width: 1440px;
+    height: 500px;
+    padding: 15px;
     background-color: rgba(0, 222, 204, 0.20);
+    overflow: scroll;
+    overflow-x: hidden;
+    transition: .7s;
+    
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  }
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 15px;
+  
+  &Img {
+    max-width: 350px;
+  }
+  
+  &Content {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 15px;
+  }
+  
+  &TextContent {
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+    
+    &Text {
+      font: 24px 'Cantarell', Serif;
+      line-height: 34px;
+      letter-spacing: 0.05em;
+      color: #dbe2ef;
+      transition: .3s;
+      cursor: crosshair;
+      
+      &:hover {
+        opacity: 0.65;
+      }
+    }
   }
 }
 
@@ -93,12 +141,15 @@
     width: 150px;
     height: 150px;
     cursor: crosshair;
+    
     &:hover {
       opacity: .75;
     }
   }
+  
   &Link {
     scroll-behavior: smooth;
   }
 }
+
 

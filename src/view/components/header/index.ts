@@ -1,4 +1,3 @@
-import create from '../../../data/utils/create';
 import Create from '../../../data/utils/create';
 import { pageID } from '../../pages/app';
 import CompTemple from '../../template/compTemple';

@@ -1,7 +1,8 @@
 import axios from 'axios';
-import create from '../../../data/utils/create';
 import Create from '../../../data/utils/create';
 import { Datum } from '../../../data/utils/inderface';
+import { generateId } from '../../../data/utils/randomID';
+import Footer from '../../components/footer';
 import Modal from '../../components/modal';
 import Template from '../../template/template';
 import style from './index.module.scss';
@@ -16,20 +17,6 @@ class Home extends Template {
     super(id, tag, className);
   }
 
-  settings() {
-    const section = new Create('section', style.section, this.element).element;
-    const wrapper = new Create('div', style.wrapper, section).element;
-    const setting = new create('div', `${style.settings} settings`, wrapper).element;
-    const modal = new Modal().render();
-    console.log(modal);
-    new create('img', `${style.settingsImg}`, setting, null, {
-      src: 'https://img.icons8.com/nolan/64/apple-settings.png',
-    }).element;
-    setting.addEventListener('click', () => {
-      wrapper.append(modal);
-    });
-  }
-
   mainContent() {
     this.settings();
     const section = new Create('section', style.section, this.element).element;
@@ -40,6 +27,7 @@ class Home extends Template {
     new Create('p', style.tittleWrapperSubTitle, titleWrapper, 'All the best manga collected for you in one place')
       .element;
     const contentWrapper = new Create('div', style.contentWrapper, wrapper).element;
+
     const fetchData: () => Promise<void> = async () => {
       try {
         axios
@@ -52,13 +40,8 @@ class Home extends Template {
             const makeUniq = (arr: Datum[]) => {
               return arr.filter((el, id: number) => arr.indexOf(el) === id);
             };
-            const dt = makeUniq(data);
-            dt.map((el) => {
-              const card = new Create('div', `${style.card}`, contentWrapper).element;
-
-              card.addEventListener('click', () => {
-                console.log('Work???');
-              });
+            const dt = makeUniq(data).map((el) => {
+              const card = new Create('div', `${style.card}`, contentWrapper).element; // !!!!!!!!!!!!
               const cardItem = new Create('div', style.cardItem, card).element;
               new Create('img', style.cardImg, cardItem, null, {
                 src: `${el.images.jpg.large_image_url}`,
@@ -88,6 +71,20 @@ class Home extends Template {
       }
     };
     fetchData();
+  }
+
+  settings() {
+    const section = new Create('section', style.settingsSection, this.element).element;
+    const wrapper = new Create('div', style.wrapper, section).element;
+    const setting = new Create('div', `${style.settings} settings`, wrapper).element;
+    new Create('img', `${style.settingsImg}`, setting, null, {
+      src: 'https://img.icons8.com/nolan/64/apple-settings.png',
+    }).element;
+    const modal = new Modal('123', 'div', style.modalWrapper);
+    section.append(modal.render());
+    setting.addEventListener('click', () => {
+      modal.classList(style.modalWrapperAtcive);
+    });
   }
 
   render() {

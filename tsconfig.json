@@ -19,7 +19,8 @@
   },
   "include": [
     "./src/**/*",
-    "custom.d.ts"
+    "custom.d.ts",
+    "../../.cache/JetBrains/WebStorm2022.1/javascript/typings/node/18.0.1/node_modules/@types/node/globals.d.ts"
   ],
   "exclude": [
     "node_modules"

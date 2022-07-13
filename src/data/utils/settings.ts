@@ -1,4 +1,4 @@
-export const cleanLocalStorage = (): void => {
+const cleanLocalStorage = (): void => {
   localStorage.clear();
 };
 
@@ -10,6 +10,7 @@ export const settingModal = [
         save: 'Save',
         cancel: 'Cancel',
         reset: 'Reset',
+        close: 'Close',
         cleanLocalStorage, // reset local storage
       },
     ],

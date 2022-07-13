@@ -1,10 +1,15 @@
 import Create from '../../data/utils/create.ts';
+import { Datum } from '../../data/utils/inderface';
+import { generateId } from '../../data/utils/randomID';
+import Footer from '../components/footer';
+import footer from '../components/footer';
 import style from './index.module.scss';
 import axios from 'axios';
 
 abstract class Template {
   protected element: HTMLElement;
   protected input!: HTMLInputElement;
+  private static defaultClass: string = 'defaultClass';
   static TextContent = {};
 
   protected constructor(id: string, tag: string, className?: string) {
@@ -36,35 +41,64 @@ abstract class Template {
       placeholder: 'Type your text here...',
       type: 'text',
     }).element;
-    this.input.addEventListener('keypress', (evt: KeyboardEvent) => {
-      const searchData: () => Promise<void> = async () => {
-        try {
-          await axios
-            .get(`https://api.jikan.moe/v4/anime?q=limit=5?q=max_score=5?q= + ${this.input.value}`, {
-              method: 'GET',
-            })
-            .then((response): void => {
-              const data: Response = response.data.data;
-              const container = new Create('div', style.wrapperResult, wrapper).element;
-              const card = new Create('div', '123', container).element;
-              Object.keys(data).forEach((key) => {
-                const data: Record<string, unknown> = response.data.data[key];
-                new Create('p', '123', card, data.title, { style: 'color: black' }).element;
-              });
+    const searchData: () => Promise<void> = async () => {
+      try {
+        await axios
+          .get(`https://api.jikan.moe/v4/anime?q= + ${this.input.value}`, {
+            method: 'GET',
+          })
+          .then((response): void => {
+            const container = new Create('div', `${style.wrapperResult} ${Template.defaultClass}`, wrapper, null)
+              .element;
+            const data = response.data.data;
+            const makeUniq = (arr: Datum[]) => {
+              return arr.filter((el, id: number) => arr.indexOf(el) - id === 0);
+            };
+            makeUniq(data).map((el) => {
+              const card = new Create('div', `${style.card}`, container).element;
+
+              const cardContent = new Create('div', style.cardContent, card).element;
+              new Create('img', style.cardImg, cardContent, null, {
+                src: `${el.images.jpg.large_image_url}`,
+                alt: `${el.title_japanese}`,
+                title: `${el.status}`,
+              }).element;
+              const textContent = new Create('div', style.cardTextContent, cardContent).element;
+              const cardLink = new Create('a', style.cardTextContentText, textContent, null, {
+                href: `${el.url}`,
+              }).element;
+              new Create('h2', style.cardTextContentText, cardLink, `${el.title}`).element;
+              new Create('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].name}`).element;
+              if (el.background === null) {
+                new Create('p', style.cardTextContentText, textContent, `${el.synopsis}`).element;
+              } else {
+                new Create('p', style.cardTextContentText, textContent, `${el.background}`).element;
+              }
             });
-        } catch (error) {
-          throw new Error(`Ops... ${error}`);
-        }
-      };
+          });
+      } catch (error) {
+        throw new Error(`Ops... ${error}`);
+      }
+    };
+    this.input.addEventListener('keypress', (evt: KeyboardEvent) => {
       if (evt.key === 'Enter') {
-        searchData().then((r) => console.log(r));
+        searchData();
+      }
+      const defaultClass = document.querySelector(`.${Template.defaultClass}`);
+      if (defaultClass) {
+        defaultClass.remove();
       }
     });
-    const button: HTMLElement = new Create('button', style.wrapperInputButton, inputWrapper, null, { type: 'submit' })
+    const button: Element = new Create('button', style.wrapperInputButton, inputWrapper, null, { type: 'submit' })
       .element;
-    button.addEventListener('click', (evt: Event) => {
+    button.addEventListener('click', (evt) => {
       evt.preventDefault();
-      console.log(this.input.value);
+      this.input.value;
+      searchData();
+      const defaultClass = document.querySelector(`.${Template.defaultClass}`);
+      if (defaultClass) {
+        defaultClass.remove();
+      }
     });
   }
 

@@ -7,6 +7,20 @@
   margin: 0 auto;
 }
 
+.modalWrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  opacity: 0;
+  transition: 1s all ease-in-out;
+  
+  &Atcive {
+    opacity: 1;
+    visibility: visible;
+    transition: 1s all ease-in-out;
+    
+  }
+}
+
 .tittleWrapper {
   position: relative;
   display: flex;
@@ -159,12 +173,17 @@
   }
 }
 
+.settingsSection {
+  padding-top: 600px;
+}
+
 .settings {
   max-width: 64px;
   cursor: pointer;
-  transition: .7s;
   
   &Img {
+    transition: .5s all ease-in-out;
+    
     &:hover {
       transform: rotate(90deg);
     }

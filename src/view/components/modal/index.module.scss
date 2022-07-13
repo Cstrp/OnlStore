@@ -1,39 +1,44 @@
-.wrapper {
-  max-width: 1440px;
-  margin: 0 auto;
-  
-  .modalWrapper {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-box-align: end;
-    -ms-flex-align: end;
-    align-items: center;
-    text-align: center;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    padding-top: 36px;
-    @media screen and (max-width: 485px) {
-      justify-content: center;
-      gap: 15px;
-    }
+
+.modalWrapper {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-flow: column wrap;
+  gap: 20px;
+  transition: 1.3s all ease-in-out;
+  justify-content: space-between;
+  padding-top: 36px;
+  @media screen and (max-width: 485px) {
+    justify-content: center;
+    gap: 15px;
   }
   
   .modalWrapperHeader {
     color: white;
     
     &Title {
-      font-family: "Cantarell", serif;
-      font-size: 22px;
-      line-height: 22px;
+      font: 700 35px 'Cantarell Thin', sans-serif;
+      text-transform: uppercase;
+      font-family: 'Cantarell Thin', sans-serif;
+      line-height: 25px;
+      display: flex;
+      align-items: center;
       letter-spacing: 0.05em;
+      color: #FFFFFF;
+  
+      &:hover {
+        color: rgba(255, 255, 255, 0.7);
+        opacity: 0.75;
+      }
     }
   }
   
   .modalWrapperBody {
-    color: white;
+    width: 30%;
+  }
+  
+  .modalWrapperFooter {
+    display: flex;
+    flex-flow: column wrap;
   }
 }
