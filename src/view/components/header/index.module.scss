@@ -123,11 +123,29 @@
       opacity: 0.85;
     }
     
-    &:last-child {
+    &:nth-child(3) {
       border: 5px solid;
       border-image-slice: 1;
       border-image-source: linear-gradient(to left, rgb(255, 255, 255, 0.15), rgba(127, 3, 176, 0.7));
     }
+    
   }
+  
+  &Shop {
+    position: relative;
+    max-width: 64px;
+    
+    &Couter {
+      display: flex;
+      justify-content: center;
+      font: 20px "Cantarell Extra Bold", sans-serif;
+      color: #dbe2ef;
+      max-width: 20px;
+      position: absolute;
+      top: 13px;
+      left: 26px;
+    }
+  }
+  
 }
 

@@ -10,6 +10,7 @@ const buttons = [
 ];
 
 class Header extends CompTemple {
+  private counter!: Element;
   constructor(id: string, tag: string, className?: string) {
     super(id, tag, className);
   }
@@ -29,6 +30,10 @@ class Header extends CompTemple {
       }).element;
     });
     const btnWrap = new Create('div', style.btnWrap, headerWrapper).element;
+    const shop = new Create('div', style.btnWrapShop, btnWrap).element;
+    this.counter = new Create('div', `${style.btnWrapShopCouter}`, shop).element;
+    new Create('img', '123', shop, null, { src: `https://cdn-icons-png.flaticon.com/512/7625/7625953.png` }).element;
+
     new Create('div', style.btnWrapBtn, btnWrap, 'Login In').element;
     new Create('div', style.btnWrapBtn, btnWrap, 'Sign Up').element;
   }

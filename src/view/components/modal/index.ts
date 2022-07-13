@@ -1,7 +1,7 @@
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
+import { settingModal } from '../../../data/settings';
 import Create, { nullOn } from '../../../data/utils/create';
-import { settingModal } from '../../../data/utils/settings';
 import CompTemple from '../../template/compTemple';
 import style from './index.module.scss';
 
@@ -20,11 +20,11 @@ class Modal extends CompTemple {
     new Create('button', '123', modalFooter, `${settingModal[0].btn[0].close}`).element;
     const slider = new Create('div', '123', modalBody).element;
     noUiSlider.create(<never>slider, {
-      start: [0, 25],
+      start: [0, 27],
       connect: true,
       range: {
         min: 0,
-        max: 25,
+        max: 27,
       },
     });
 

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Create from '../../../data/utils/create';
-import { insertionSort } from '../../../data/utils/sort';
 import Template from '../../template/template';
 import style from './index.module.scss';
 
@@ -30,7 +29,7 @@ class Recommendation extends Template {
     const fetchData: () => Promise<void> = async () => {
       try {
         const response = await axios.get('https://api.jikan.moe/v4/recommendations/manga');
-        const data = insertionSort(response.data.data);
+        const data = response.data.data;
         Object.keys(data).forEach((key) => {
           const data = response.data.data[key];
           const card = new Create('div', style.recommendationCard, sectionWrapper).element;

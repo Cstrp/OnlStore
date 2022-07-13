@@ -1,6 +1,5 @@
 import { generateId } from '../../../data/utils/randomID';
 import Footer from '../../components/footer';
-// import Footer from '../../components/footer';
 import Header from '../../components/header';
 import Template from '../../template/template';
 import Character from '../character';
@@ -19,7 +18,7 @@ class App {
   private static element: HTMLElement = document.body;
   private static defaultPageID: string = 'defaultID';
   private header: Header;
-  // private footer: Footer;
+  private footer: Footer;
 
   static renderPage(id: string) {
     const defaultPage = document.querySelector(`#${App.defaultPageID}`);
@@ -51,7 +50,7 @@ class App {
   constructor() {
     this.header = new Header(generateId(), 'header', style.header);
     App.element.classList.add(style.body);
-    // this.footer = new Footer(generateId(), 'footer', style.footer);
+    this.footer = new Footer(generateId(), 'footer', style.footer);
   }
 
   private router() {
@@ -65,6 +64,7 @@ class App {
       }
     });
   }
+
 
   private StoragePage() {
     const storage = localStorage.getItem('page');
@@ -82,20 +82,12 @@ class App {
     });
   }
 
-  render() {
+  async render() {
     this.router();
     this.StoragePage();
     App.element.append(this.header.render());
     App.renderPage(pageID.home);
-
-    // if (this.footer) {
-    //   App.element.append(this.footer.render());
-    // } else {
-    //   console.log('Footer is not defined');
-    // }
-    // setTimeout(() => {
-    //   App.element.append(this.footer.render());
-    // }, 2345);
+    await App.element.append(this.footer.render());
   }
 }
 

@@ -1,8 +1,6 @@
 import axios from 'axios';
 import Create from '../../../data/utils/create';
-import { Datum } from '../../../data/utils/inderface';
-import { generateId } from '../../../data/utils/randomID';
-import Footer from '../../components/footer';
+import { makeUniq } from '../../../data/utils/makeUniq';
 import Modal from '../../components/modal';
 import Template from '../../template/template';
 import style from './index.module.scss';
@@ -27,7 +25,6 @@ class Home extends Template {
     new Create('p', style.tittleWrapperSubTitle, titleWrapper, 'All the best manga collected for you in one place')
       .element;
     const contentWrapper = new Create('div', style.contentWrapper, wrapper).element;
-
     const fetchData: () => Promise<void> = async () => {
       try {
         axios
@@ -37,11 +34,8 @@ class Home extends Template {
           })
           .then((response) => {
             const data = response.data.data;
-            const makeUniq = (arr: Datum[]) => {
-              return arr.filter((el, id: number) => arr.indexOf(el) === id);
-            };
-            const dt = makeUniq(data).map((el) => {
-              const card = new Create('div', `${style.card}`, contentWrapper).element; // !!!!!!!!!!!!
+            makeUniq(data).map((el) => {
+              const card = new Create('div', `${style.card}`, contentWrapper, null, { id: `${el.mal_id}` }).element;
               const cardItem = new Create('div', style.cardItem, card).element;
               new Create('img', style.cardImg, cardItem, null, {
                 src: `${el.images.jpg.large_image_url}`,
@@ -60,8 +54,18 @@ class Home extends Template {
               new Create('p', style.cardContentP, otherContent, `Genre: ${el.genres[0].name}`).element;
               const other = new Create('div', style.other, card).element;
               const img = new Create('div', style.otherImg, other, null).element;
-              new Create('img', style.otherImg, img, null, { src: 'https://www.svgrepo.com/show/13666/heart.svg' })
-                .element;
+              const image: HTMLImageElement = <HTMLImageElement>new Create('img', style.otherImg, img, null, {
+                src: 'https://www.svgrepo.com/show/13666/heart.svg',
+              }).element;
+              const shopCart = document.querySelector('.counter');
+              image.addEventListener('click', (evt) => {
+                image.src = `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/327/white-heart_1f90d.png`;
+                // if (image as HTMLElement) {
+                //   image.src = `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/327/white-heart_1f90d.png`;
+                // } else {
+                //   image.src = 'https://www.svgrepo.com/show/13666/heart.svg';
+                // }
+              });
               const price = new Create('div', '123', other).element;
               new Create('p', style.otherPrice, price, `¥ ${Math.floor(<number>el.members / 123)}`).element;
             });
@@ -72,6 +76,8 @@ class Home extends Template {
     };
     fetchData();
   }
+
+  /// typeof 'genre' and more for filter
 
   settings() {
     const section = new Create('section', style.settingsSection, this.element).element;

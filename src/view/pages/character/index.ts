@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Create from '../../../data/utils/create';
-import { insertionSort } from '../../../data/utils/sort';
 import Template from '../../template/template';
 import style from './index.module.scss';
 
@@ -29,7 +28,7 @@ class Character extends Template {
     const sectionWrapper = new Create('div', style.characterWrapper, wrapper).element;
     const fetchData: () => Promise<void> = async () => {
       const resp = await axios.get('https://api.jikan.moe/v4/characters');
-      const data = insertionSort(resp.data.data);
+      const data = resp.data.data;
       Object.keys(data).forEach((key) => {
         const data = resp.data.data[key];
         const card = new Create('div', style.characterCard, sectionWrapper).element;

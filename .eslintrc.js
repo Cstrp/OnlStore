@@ -1,11 +1,13 @@
 module.exports = {
   env: {
+    node: true,
     browser: true,
     es2021: true,
   },
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    tsconfigRootDir: __dirname,
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: ['./tsconfig.json'],
@@ -24,5 +26,5 @@ module.exports = {
   settings: {
     include: [],
   },
-  ignorePatterns: ['node_modules/**/*'],
+  ignorePatterns: ['node_modules/**/*', 'webpack.config.js.', 'babel.config.js', '**/*.config.js'],
 };

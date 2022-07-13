@@ -56,7 +56,6 @@ abstract class Template {
             };
             makeUniq(data).map((el) => {
               const card = new Create('div', `${style.card}`, container).element;
-
               const cardContent = new Create('div', style.cardContent, card).element;
               new Create('img', style.cardImg, cardContent, null, {
                 src: `${el.images.jpg.large_image_url}`,

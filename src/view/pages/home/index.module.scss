@@ -164,7 +164,9 @@
   
   &Img {
     height: 20px;
-    fill: #FF4B77;
+    .active {
+    
+    }
   }
   
   &Price {
@@ -189,4 +191,6 @@
     }
   }
 }
+
+
 
