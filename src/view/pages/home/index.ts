@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Create from '../../../data/utils/create';
 import { makeUniq } from '../../../data/utils/makeUniq';
+import { get, set } from '../../../data/utils/storage';
 import Modal from '../../components/modal';
 import Template from '../../template/template';
 import style from './index.module.scss';
@@ -52,20 +53,43 @@ class Home extends Template {
               }).element;
               new Create('p', style.cardContentP, genreLink, `${el.authors[0].name}`).element;
               new Create('p', style.cardContentP, otherContent, `Genre: ${el.genres[0].name}`).element;
+              new Create('p', style.cardContentP, otherContent, `${el.published.string.replace('to ?', 'to now day')}`)
+                .element;
               const other = new Create('div', style.other, card).element;
               const img = new Create('div', style.otherImg, other, null).element;
-              const image: HTMLImageElement = <HTMLImageElement>new Create('img', style.otherImg, img, null, {
+              const image: HTMLImageElement = <HTMLImageElement>new Create('img', `${style.otherImg}`, img, null, {
                 src: 'https://www.svgrepo.com/show/13666/heart.svg',
+                title: 'Add to cart',
               }).element;
-              const shopCart = document.querySelector('.counter');
-              image.addEventListener('click', (evt) => {
-                image.src = `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/327/white-heart_1f90d.png`;
-                // if (image as HTMLElement) {
-                //   image.src = `https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/327/white-heart_1f90d.png`;
-                // } else {
-                //   image.src = 'https://www.svgrepo.com/show/13666/heart.svg';
-                // }
+              const shopCart: HTMLDivElement = <HTMLDivElement>document.querySelector('.counter');
+              [image].map((el) => {
+                el.addEventListener('click', (evt) => {
+                  evt.preventDefault();
+                  el.classList.toggle(style.otherImgActive);
+                  if (el.classList.contains(style.otherImgActive)) {
+                    shopCart.innerHTML = `${Number(shopCart.innerHTML) + 1}`;
+                  } else {
+                    shopCart.innerHTML = `${Number(shopCart.innerHTML) - 1}`;
+                  }
+                });
               });
+              // save the state of the cards (active) and the value of the counter
+              const storageCard = get('card');
+              const storageCart = get('counter');
+
+              // window.addEventListener('load', () => {
+              //   const storageCardObj = JSON.parse(<string>localStorage.getItem('card'));
+              //   if (storageCardObj.includes(el.mal_id)) {
+              //     image.classList.add(style.otherImgActive);
+              //   }
+              //   const storageCartObj = JSON.parse(<string>localStorage.getItem('counter'));
+              //   shopCart.innerHTML = `${storageCartObj}`;
+              // });
+              // window.addEventListener('beforeunload', () => {
+              //   localStorage.setItem('card', JSON.stringify(<string>storageCardObj));
+              //   localStorage.setItem('counter', JSON.stringify(<string>storageCartObj));
+              // });
+
               const price = new Create('div', '123', other).element;
               new Create('p', style.otherPrice, price, `¥ ${Math.floor(<number>el.members / 123)}`).element;
             });

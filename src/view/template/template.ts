@@ -1,3 +1,4 @@
+import create from '../../data/utils/create.ts';
 import Create from '../../data/utils/create.ts';
 import { Datum } from '../../data/utils/inderface';
 import { generateId } from '../../data/utils/randomID';
@@ -46,6 +47,7 @@ abstract class Template {
         await axios
           .get(`https://api.jikan.moe/v4/anime?q= + ${this.input.value}`, {
             method: 'GET',
+            baseURL: 'https://api.jikan.moe/v4/manga',
           })
           .then((response): void => {
             const container = new Create('div', `${style.wrapperResult} ${Template.defaultClass}`, wrapper, null)
@@ -67,7 +69,11 @@ abstract class Template {
                 href: `${el.url}`,
               }).element;
               new Create('h2', style.cardTextContentText, cardLink, `${el.title}`).element;
-              new Create('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].name}`).element;
+              if (el.genres[0].name === null) {
+                new create('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].type}`);
+              } else {
+                new Create('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].name}`).element;
+              }
               if (el.background === null) {
                 new Create('p', style.cardTextContentText, textContent, `${el.synopsis}`).element;
               } else {

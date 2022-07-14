@@ -22,6 +22,13 @@ module.exports = {
     'no-console': 0,
     'class-methods-use-this': 'off',
     'no-constant-condition': 0,
+    'prefer-const': [
+      0,
+      {
+        destructuring: 'any',
+        ignoreReadBeforeAssign: false,
+      },
+    ],
   },
   settings: {
     include: [],

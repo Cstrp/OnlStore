@@ -1,4 +1,5 @@
 import { generateId } from '../../../data/utils/randomID';
+import { get, set } from '../../../data/utils/storage';
 import Footer from '../../components/footer';
 import Header from '../../components/header';
 import Template from '../../template/template';
@@ -65,20 +66,19 @@ class App {
     });
   }
 
-
   private StoragePage() {
-    const storage = localStorage.getItem('page');
+    const storage = get('page', null);
     if (storage) {
       App.renderPage(storage);
     } else {
       App.renderPage(App.defaultPageID);
     }
-    window.addEventListener('beforeunload', () => {
-      localStorage.setItem('page', window.location.hash.slice(1));
-    });
     window.addEventListener('load', () => {
       const hash = window.location.hash.slice(1);
       App.renderPage(hash);
+    });
+    window.addEventListener('beforeunload', () => {
+      set('page', window.location.hash.slice(1));
     });
   }
 

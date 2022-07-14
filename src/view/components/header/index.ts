@@ -3,17 +3,40 @@ import { pageID } from '../../pages/app';
 import CompTemple from '../../template/compTemple';
 import style from './index.module.scss';
 
+interface IHeader {
+  wrapper: HTMLDivElement;
+  headerWrapper: HTMLDivElement;
+  headerLogo: HTMLDivElement;
+  headerLogoLink: HTMLLinkElement;
+  headerTitle: HTMLTitleElement;
+  headerNav: HTMLDListElement;
+  headerListItem: HTMLOListElement;
+  btnWrap: HTMLDivElement;
+  shop: HTMLDivElement;
+  shopCard: Element;
+}
+
 const buttons = [
   { id: pageID.home, text: 'Home' },
   { id: pageID.characters, text: 'Characters' },
   { id: pageID.recommendation, text: 'Recommendation' },
 ];
 
-class Header extends CompTemple {
-  private counter!: Element;
+class Header extends CompTemple implements IHeader {
   constructor(id: string, tag: string, className?: string) {
     super(id, tag, className);
   }
+
+  wrapper!: HTMLDivElement;
+  headerWrapper!: HTMLDivElement;
+  headerLogo!: HTMLDivElement;
+  headerLogoLink!: HTMLLinkElement;
+  headerTitle!: HTMLTitleElement;
+  headerNav!: HTMLDListElement;
+  headerListItem!: HTMLOListElement;
+  btnWrap!: HTMLDivElement;
+  shop!: HTMLDivElement;
+  shopCard!: Element;
 
   headerContent() {
     const wrapper = new Create('div', style.wrapper, this.element).element;
@@ -31,7 +54,9 @@ class Header extends CompTemple {
     });
     const btnWrap = new Create('div', style.btnWrap, headerWrapper).element;
     const shop = new Create('div', style.btnWrapShop, btnWrap).element;
-    this.counter = new Create('div', `${style.btnWrapShopCouter}`, shop).element;
+    if (Object !== null) {
+      new Create('div', `${style.btnWrapShopCouter} counter`, shop).element;
+    }
     new Create('img', '123', shop, null, { src: `https://cdn-icons-png.flaticon.com/512/7625/7625953.png` }).element;
 
     new Create('div', style.btnWrapBtn, btnWrap, 'Login In').element;

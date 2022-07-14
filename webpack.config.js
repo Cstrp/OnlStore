@@ -74,11 +74,11 @@ module.exports = {
     ),
     [
       new MiniCssExtractPlugin({
-        runtime: true,
         filename: '[name].[contenthash].css',
       }),
       new ESLintPlugin({
-        extensions: 'ts',
+        extensions: ['.tsx', '.ts', '.js'],
+        exclude: 'node_modules',
       }),
     ]
   ),

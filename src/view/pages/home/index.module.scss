@@ -154,6 +154,9 @@
     font: 20px "Roboto Thin", sans-serif;
     color: white;
     text-align: justify;
+    &:last-child{
+      font: 14px "Roboto Light", sans-serif;
+    }
   }
 }
 
@@ -164,10 +167,15 @@
   
   &Img {
     height: 20px;
-    .active {
+    position: relative;
+    transition: .3s all ease;
     
+    &Active {
+     opacity: 0.7;
+      filter: invert(100%);
     }
   }
+  
   
   &Price {
     font: 20px 'Cantarell Thin', sans-serif;
@@ -191,6 +199,8 @@
     }
   }
 }
+
+
 
 
 
