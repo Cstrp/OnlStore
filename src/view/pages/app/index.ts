@@ -82,12 +82,12 @@ class App {
     });
   }
 
-  async render() {
+  render() {
     this.router();
     this.StoragePage();
     App.element.append(this.header.render());
     App.renderPage(pageID.home);
-    await App.element.append(this.footer.render());
+    App.element.append(this.footer.render());
   }
 }
 

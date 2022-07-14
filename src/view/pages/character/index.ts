@@ -38,7 +38,6 @@ class Character extends Template {
           src: `${data.images.jpg.image_url}`,
           alt: `${data.name}`,
         });
-
         const cardContent = new Create('div', style.characterCardContent, card).element;
         const cardContentTitle = new Create('h2', style.characterCardContentTitle, cardContent).element;
         new Create('a', style.characterCardLink, cardContentTitle, `${data.name}`, {
@@ -48,7 +47,7 @@ class Character extends Template {
         new Create('div', style.characterCardContentText, aboutContent, `${data.about}`);
       });
     };
-    fetchData();
+    fetchData().catch((err) => console.log(err));
   }
 
   render() {
