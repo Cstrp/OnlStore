@@ -1,10 +1,10 @@
-export type nullOn = string | null | unknown;
-export type parentOn = ParentNode | Create | null;
+export type Values = string | null | unknown;
+export type ParentElem = ParentNode | Create | null;
 
 class Create {
   element: Element;
 
-  constructor(tag: string, classNames: string, parent?: parentOn, value?: nullOn, attr?: Record<string, unknown>) {
+  constructor(tag: string, classNames: string, parent?: ParentElem, value?: Values, attr?: Record<string, unknown>) {
     this.element = document.createElement(tag);
     this.element.classList.add(...classNames.split(' '));
     if (typeof value === 'string') {

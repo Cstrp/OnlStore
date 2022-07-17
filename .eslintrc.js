@@ -31,7 +31,12 @@ module.exports = {
     ],
   },
   settings: {
-    include: [],
+    include: ['**/*.config.js'],
   },
   ignorePatterns: ['node_modules/**/*', 'webpack.config.js.', 'babel.config.js', '**/*.config.js'],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+    },
+  ],
 };

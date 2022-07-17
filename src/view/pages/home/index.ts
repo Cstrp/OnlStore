@@ -1,7 +1,8 @@
 import axios from 'axios';
+import * as stream from 'stream';
 import Create from '../../../data/utils/create';
 import { makeUniq } from '../../../data/utils/makeUniq';
-import { get, set } from '../../../data/utils/storage';
+import { get, remove, set } from '../../../data/utils/storage';
 import Modal from '../../components/modal';
 import Template from '../../template/template';
 import style from './index.module.scss';
@@ -28,8 +29,8 @@ class Home extends Template {
     const fetchData: () => Promise<void> = async () => {
       axios.get('https://api.jikan.moe/v4/manga', { method: 'GET' }).then((res) => {
         const data = res.data.data;
-        makeUniq(data).map((el) => {
-          const card = new Create('div', `${style.card}`, contentWrapper, null, { id: `${el.mal_id}` }).element;
+        makeUniq(data).forEach((el) => {
+          const card = new Create('div', `${style.card}`, contentWrapper, null).element;
           const cardItem = new Create('div', style.cardItem, card).element;
           new Create('img', style.cardImg, cardItem, null, {
             src: `${el.images.jpg.large_image_url}`,
@@ -55,22 +56,20 @@ class Home extends Template {
             title: 'Add to cart',
           }).element;
           const shopCart: HTMLDivElement = <HTMLDivElement>document.querySelector('.counter');
-          [image].map((el) => {
-            el.addEventListener('click', (evt) => {
+          [image].forEach((el) => {
+            el.onclick = (evt) => {
               evt.preventDefault();
+              get('counter');
               el.classList.toggle(style.otherImgActive);
-              if (el.classList.contains(style.otherImgActive)) {
-                shopCart.innerHTML = `${Number(shopCart.innerHTML) + 1}`;
-                set('shopCart', shopCart.innerHTML);
+              if (el.classList.contains(style.otherImgActive) && shopCart) {
+                set('counter', (shopCart.innerHTML = `${Number(shopCart.innerHTML) + 1}`));
               } else {
-                shopCart.innerHTML = `${Number(shopCart.innerHTML) - 1}`;
-                set('shopCart', shopCart.innerHTML);
+                set('counter', (shopCart.innerHTML = `${Number(shopCart.innerHTML) - 1}`));
               }
-
-              console.log(get('shopCart'));
-            });
+              console.log(get('counter'));
+            };
           });
-          const price = new Create('div', '123', other).element;
+          const price = new Create('div', style.otherPrice, other).element;
           new Create('p', style.otherPrice, price, `¥ ${Math.floor(<number>el.members / 123)}`).element;
         });
       });

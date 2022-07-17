@@ -67,7 +67,7 @@ class App {
   }
 
   private StoragePage() {
-    const storage = get('page', null);
+    const storage = get('page');
     if (storage) {
       App.renderPage(storage);
     } else {
@@ -80,6 +80,7 @@ class App {
     window.addEventListener('beforeunload', () => {
       set('page', window.location.hash.slice(1));
     });
+    console.log(get('counter'));
   }
 
   render() {
@@ -87,7 +88,9 @@ class App {
     this.StoragePage();
     App.element.append(this.header.render());
     App.renderPage(pageID.home);
-    App.element.append(this.footer.render());
+    // new Promise((resolve, reject) => {
+    //   reject();
+    // }).then(() => App.element.append(this.footer.render()));
   }
 }
 

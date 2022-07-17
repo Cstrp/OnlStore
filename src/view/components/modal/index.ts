@@ -1,7 +1,7 @@
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 import { settingModal } from '../../../data/settings';
-import Create, { nullOn } from '../../../data/utils/create';
+import Create, { Values } from '../../../data/utils/create';
 import CompTemple from '../../template/compTemple';
 import style from './index.module.scss';
 
@@ -41,7 +41,7 @@ class Modal extends CompTemple {
     });
   }
 
-  classList(className?: nullOn) {
+  classList(className?: Values) {
     if (typeof className === 'string') {
       this.element.classList.toggle(className);
     }
