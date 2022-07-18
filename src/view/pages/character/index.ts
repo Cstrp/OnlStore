@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Create from '../../../data/utils/create';
+import CreateDOMElement from '../../../data/utils/CreateDOMElement';
 import Template from '../../template/template';
 import style from './index.module.scss';
 
@@ -14,37 +14,37 @@ class Character extends Template {
   }
 
   content() {
-    const section = new Create('section', style.characterSection, this.element).element;
-    const wrapper = new Create('div', style.wrapper, section).element;
-    const charTitleWrap = new Create('div', style.characterTitleWrapper, wrapper).element;
-    new Create('div', style.characterTitleWrapperDecor, charTitleWrap).element;
-    new Create('h1', style.characterTitleWrapperDecorH1, charTitleWrap, 'Featured manga persons').element;
-    new Create(
+    const section = new CreateDOMElement('section', style.characterSection, this.element).element;
+    const wrapper = new CreateDOMElement('div', style.wrapper, section).element;
+    const charTitleWrap = new CreateDOMElement('div', style.characterTitleWrapper, wrapper).element;
+    new CreateDOMElement('div', style.characterTitleWrapperDecor, charTitleWrap).element;
+    new CreateDOMElement('h1', style.characterTitleWrapperDecorH1, charTitleWrap, 'Featured manga persons').element;
+    new CreateDOMElement(
       'p',
       style.characterTitleWrapperDecorP,
       charTitleWrap,
       'All your favorite anime and manga characters in one place'
     ).element;
-    const sectionWrapper = new Create('div', style.characterWrapper, wrapper).element;
+    const sectionWrapper = new CreateDOMElement('div', style.characterWrapper, wrapper).element;
     const fetchData: () => Promise<void> = async () => {
       const resp = await axios.get('https://api.jikan.moe/v4/characters');
       const data = resp.data.data;
       Object.keys(data).forEach((key) => {
         const data = resp.data.data[key];
-        const card = new Create('div', style.characterCard, sectionWrapper).element;
-        const cardImg = new Create('div', style.characterCardImg, card).element;
-        new Create('p', style.japanAmazing, cardImg, `${data.name_kanji}`).element;
-        new Create('img', style.cardImg, cardImg, null, {
+        const card = new CreateDOMElement('div', style.characterCard, sectionWrapper).element;
+        const cardImg = new CreateDOMElement('div', style.characterCardImg, card).element;
+        new CreateDOMElement('p', style.japanAmazing, cardImg, `${data.name_kanji}`).element;
+        new CreateDOMElement('img', style.cardImg, cardImg, null, {
           src: `${data.images.jpg.image_url}`,
           alt: `${data.name}`,
         });
-        const cardContent = new Create('div', style.characterCardContent, card).element;
-        const cardContentTitle = new Create('h2', style.characterCardContentTitle, cardContent).element;
-        new Create('a', style.characterCardLink, cardContentTitle, `${data.name}`, {
+        const cardContent = new CreateDOMElement('div', style.characterCardContent, card).element;
+        const cardContentTitle = new CreateDOMElement('h2', style.characterCardContentTitle, cardContent).element;
+        new CreateDOMElement('a', style.characterCardLink, cardContentTitle, `${data.name}`, {
           href: `${data.url}`,
         }).element;
-        const aboutContent = new Create('div', style.characterCardContent, card).element;
-        new Create('div', style.characterCardContentText, aboutContent, `${data.about}`);
+        const aboutContent = new CreateDOMElement('div', style.characterCardContent, card).element;
+        new CreateDOMElement('div', style.characterCardContentText, aboutContent, `${data.about}`);
       });
     };
     fetchData().catch((err) => console.log(err));

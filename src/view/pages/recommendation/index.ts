@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Create from '../../../data/utils/create';
+import CreateDOMElement from '../../../data/utils/CreateDOMElement';
 import Template from '../../template/template';
 import style from './index.module.scss';
 
@@ -14,39 +14,40 @@ class Recommendation extends Template {
   }
 
   content() {
-    const section = new Create('section', style.recommendationSection, this.element).element;
-    const wrapper = new Create('div', style.wrapper, section).element;
-    const recTitleWrapper = new Create('div', style.recommendationTitleWrapper, wrapper).element;
-    new Create('div', style.recommendationTitleWrapperDecor, recTitleWrapper).element;
-    new Create('h1', style.recommendationTitleWrapperDecorH1, recTitleWrapper, 'Featured Manga').element;
-    new Create(
+    const section = new CreateDOMElement('section', style.recommendationSection, this.element).element;
+    const wrapper = new CreateDOMElement('div', style.wrapper, section).element;
+    const recTitleWrapper = new CreateDOMElement('div', style.recommendationTitleWrapper, wrapper).element;
+    new CreateDOMElement('div', style.recommendationTitleWrapperDecor, recTitleWrapper).element;
+    new CreateDOMElement('h1', style.recommendationTitleWrapperDecorH1, recTitleWrapper, 'Featured Manga').element;
+    new CreateDOMElement(
       'p',
       style.recommendationTitleWrapperDecorP,
       recTitleWrapper,
       'Find out what are the best manga  anime and series here'
     ).element;
-    const sectionWrapper = new Create('div', style.RecommendationWrapper, wrapper).element;
+    const sectionWrapper = new CreateDOMElement('div', style.RecommendationWrapper, wrapper).element;
     const fetchData: () => Promise<void> = async () => {
       const response = await axios.get('https://api.jikan.moe/v4/recommendations/manga');
       const data = response.data.data;
       Object.keys(data).forEach((key) => {
         const data = response.data.data[key];
-        const card = new Create('div', style.recommendationCard, sectionWrapper).element;
-        const cardImg = new Create('div', style.recommendationCardImg, card).element;
-        new Create('img', style.cardImg, cardImg, null, {
+        const card = new CreateDOMElement('div', style.recommendationCard, sectionWrapper).element;
+        const cardImg = new CreateDOMElement('div', style.recommendationCardImg, card).element;
+        new CreateDOMElement('img', style.cardImg, cardImg, null, {
           src: `${data.entry[0].images.jpg.image_url}`,
           alt: `${data.entry[0].title}`,
         }).element;
-        const cardContent = new Create('div', style.recommendationCardContent, card).element;
-        const cardContentTitle = new Create('h2', style.recommendationCardContentTitle, cardContent).element;
-        new Create('a', style.recommendationCardLink, cardContentTitle, `${data.entry[0].title}`, {
+        const cardContent = new CreateDOMElement('div', style.recommendationCardContent, card).element;
+        const cardContentTitle = new CreateDOMElement('h2', style.recommendationCardContentTitle, cardContent).element;
+        new CreateDOMElement('a', style.recommendationCardLink, cardContentTitle, `${data.entry[0].title}`, {
           href: `${data.entry[0].url}`,
         }).element;
-        const recCardUser = new Create('div', style.recommendationCardContentUser, card).element;
-        new Create('a', style.recommendationCardLink, recCardUser, `User: ${data.user.username}`, {
+        const recCardUser = new CreateDOMElement('div', style.recommendationCardContentUser, card).element;
+        new CreateDOMElement('a', style.recommendationCardLink, recCardUser, `User: ${data.user.username}`, {
           href: `https://myanimelist.net/profile/${data.user.username}`,
         });
-        new Create('div', style.recommendationCardContentText, card, `Description:<br/>${data.content}`).element;
+        new CreateDOMElement('div', style.recommendationCardContentText, card, `Description:<br/>${data.content}`)
+          .element;
       });
     };
     fetchData().catch((err) => console.log(err));

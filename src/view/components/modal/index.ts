@@ -1,7 +1,7 @@
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 import { settingModal } from '../../../data/settings';
-import Create, { Values } from '../../../data/utils/create';
+import CreateDOMElement, { Values } from '../../../data/utils/CreateDOMElement';
 import CompTemple from '../../template/compTemple';
 import style from './index.module.scss';
 
@@ -11,14 +11,14 @@ class Modal extends CompTemple {
   }
 
   modalContent() {
-    const modalWrapper = new Create('div', style.modalWrapper, this.element).element;
-    const modalHeader = new Create('div', style.modalWrapperHeader, modalWrapper).element;
-    new Create('h2', style.modalWrapperHeaderTitle, modalHeader, 'Settings').element;
-    const modalBody = new Create('div', style.modalWrapperBody, modalWrapper).element;
-    const modalFooter = new Create('div', style.modalWrapperFooter, modalWrapper).element;
-    const select = new Create('select', '123', modalFooter).element;
-    new Create('button', '123', modalFooter, `${settingModal[0].btn[0].close}`).element;
-    const slider = new Create('div', '123', modalBody).element;
+    const modalWrapper = new CreateDOMElement('div', style.modalWrapper, this.element).element;
+    const modalHeader = new CreateDOMElement('div', style.modalWrapperHeader, modalWrapper).element;
+    new CreateDOMElement('h2', style.modalWrapperHeaderTitle, modalHeader, 'Settings').element;
+    const modalBody = new CreateDOMElement('div', style.modalWrapperBody, modalWrapper).element;
+    const modalFooter = new CreateDOMElement('div', style.modalWrapperFooter, modalWrapper).element;
+    const select = new CreateDOMElement('select', '123', modalFooter).element;
+    new CreateDOMElement('button', '123', modalFooter, `${settingModal[0].btn[0].close}`).element;
+    const slider = new CreateDOMElement('div', '123', modalBody).element;
     noUiSlider.create(<never>slider, {
       start: [0, 27],
       connect: true,
@@ -29,15 +29,15 @@ class Modal extends CompTemple {
     });
 
     settingModal[0].btn.forEach((btn) => {
-      new Create('button', '123', modalFooter, `${btn.save}`).element;
-      new Create('button', '123', modalFooter, `${btn.cancel}`).element;
-      new Create('button', '123', modalFooter, `${btn.reset}`).element;
+      new CreateDOMElement('button', '123', modalFooter, `${btn.save}`).element;
+      new CreateDOMElement('button', '123', modalFooter, `${btn.cancel}`).element;
+      new CreateDOMElement('button', '123', modalFooter, `${btn.reset}`).element;
     });
     settingModal[0].sortBtn.forEach((btn) => {
-      new Create('option', '123', select, 'Sort by', { disabled: true }).element;
-      new Create('option', '123', select, `${btn.authors}`).element;
-      new Create('option', '123', select, `${btn.genres}`).element;
-      new Create('option', '123', select, `${btn.price}`).element;
+      new CreateDOMElement('option', '123', select, 'Sort by', { disabled: true }).element;
+      new CreateDOMElement('option', '123', select, `${btn.authors}`).element;
+      new CreateDOMElement('option', '123', select, `${btn.genres}`).element;
+      new CreateDOMElement('option', '123', select, `${btn.price}`).element;
     });
   }
 

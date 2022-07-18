@@ -1,6 +1,6 @@
-import create from '../../data/utils/create.ts';
-import Create from '../../data/utils/create.ts';
-import { Datum } from '../../data/utils/inderface';
+import create from '../../data/utils/CreateDOMElement.ts';
+import CreateDOMElement from '../../data/utils/CreateDOMElement.ts';
+import { Datum } from '../../data/utils/Interface';
 import { generateId } from '../../data/utils/randomID';
 import Footer from '../components/footer';
 import footer from '../components/footer';
@@ -22,23 +22,23 @@ abstract class Template {
   }
 
   protected Content(text: string, subtext?: string) {
-    const up: HTMLDivElement = new Create('div', style.up, this.element).element;
-    const upLink: HTMLLinkElement = new Create('a', style.upLink, up).element;
+    const up: HTMLDivElement = new CreateDOMElement('div', style.up, this.element).element;
+    const upLink: HTMLLinkElement = new CreateDOMElement('a', style.upLink, up).element;
     upLink.addEventListener('click', (evt: MouseEvent) => {
       evt.preventDefault();
       this.input.focus();
     });
-    new Create('img', style.upImg, upLink, null, {
+    new CreateDOMElement('img', style.upImg, upLink, null, {
       src: 'https://i.pinimg.com/originals/80/7b/5c/807b5c4b02e765bb4930b7c66662ef4b.gif',
       title: 'Up! Meow!',
       alt: 'lol',
     }).element;
-    const section: Element = new Create('section', style.section, this.element).element;
-    const wrapper: HTMLElement = new Create('article', style.wrapper, section).element;
-    new Create('h2', style.wrapperTitle, wrapper, text).element;
-    new Create('p', style.wrapperSubTitle, wrapper, subtext).element;
-    const inputWrapper: HTMLElement = new Create('div', style.wrapperInput, wrapper).element;
-    this.input = new Create('input', style.wrapperInputField, inputWrapper, null, {
+    const section: Element = new CreateDOMElement('section', style.section, this.element).element;
+    const wrapper: HTMLElement = new CreateDOMElement('article', style.wrapper, section).element;
+    new CreateDOMElement('h2', style.wrapperTitle, wrapper, text).element;
+    new CreateDOMElement('p', style.wrapperSubTitle, wrapper, subtext).element;
+    const inputWrapper: HTMLElement = new CreateDOMElement('div', style.wrapperInput, wrapper).element;
+    this.input = new CreateDOMElement('input', style.wrapperInputField, inputWrapper, null, {
       placeholder: 'Type your text here...',
       type: 'text',
     }).element;
@@ -50,34 +50,39 @@ abstract class Template {
             baseURL: 'https://api.jikan.moe/v4/manga',
           })
           .then((response): void => {
-            const container = new Create('div', `${style.wrapperResult} ${Template.defaultClass}`, wrapper, null)
-              .element;
+            const container = new CreateDOMElement(
+              'div',
+              `${style.wrapperResult} ${Template.defaultClass}`,
+              wrapper,
+              null
+            ).element;
             const data = response.data.data;
             const makeUniq = (arr: Datum[]) => {
               return arr.filter((el, id: number) => arr.indexOf(el) - id === 0);
             };
             makeUniq(data).map((el) => {
-              const card = new Create('div', `${style.card}`, container).element;
-              const cardContent = new Create('div', style.cardContent, card).element;
-              new Create('img', style.cardImg, cardContent, null, {
+              const card = new CreateDOMElement('div', `${style.card}`, container).element;
+              const cardContent = new CreateDOMElement('div', style.cardContent, card).element;
+              new CreateDOMElement('img', style.cardImg, cardContent, null, {
                 src: `${el.images.jpg.large_image_url}`,
                 alt: `${el.title_japanese}`,
                 title: `${el.status}`,
               }).element;
-              const textContent = new Create('div', style.cardTextContent, cardContent).element;
-              const cardLink = new Create('a', style.cardTextContentText, textContent, null, {
+              const textContent = new CreateDOMElement('div', style.cardTextContent, cardContent).element;
+              const cardLink = new CreateDOMElement('a', style.cardTextContentText, textContent, null, {
                 href: `${el.url}`,
               }).element;
-              new Create('h2', style.cardTextContentText, cardLink, `${el.title}`).element;
+              new CreateDOMElement('h2', style.cardTextContentText, cardLink, `${el.title}`).element;
               if (el.genres[0].name === null) {
                 new create('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].type}`);
               } else {
-                new Create('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].name}`).element;
+                new CreateDOMElement('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].name}`)
+                  .element;
               }
               if (el.background === null) {
-                new Create('p', style.cardTextContentText, textContent, `${el.synopsis}`).element;
+                new CreateDOMElement('p', style.cardTextContentText, textContent, `${el.synopsis}`).element;
               } else {
-                new Create('p', style.cardTextContentText, textContent, `${el.background}`).element;
+                new CreateDOMElement('p', style.cardTextContentText, textContent, `${el.background}`).element;
               }
             });
           });
@@ -94,8 +99,9 @@ abstract class Template {
         defaultClass.remove();
       }
     });
-    const button: Element = new Create('button', style.wrapperInputButton, inputWrapper, null, { type: 'submit' })
-      .element;
+    const button: Element = new CreateDOMElement('button', style.wrapperInputButton, inputWrapper, null, {
+      type: 'submit',
+    }).element;
     button.addEventListener('click', (evt) => {
       evt.preventDefault();
       this.input.value;

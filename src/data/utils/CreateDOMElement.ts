@@ -1,7 +1,7 @@
 export type Values = string | null | unknown;
-export type ParentElem = ParentNode | Create | null;
+export type ParentElem = ParentNode | CreateDOMElement | null;
 
-class Create {
+class CreateDOMElement {
   element: Element;
 
   constructor(tag: string, classNames: string, parent?: ParentElem, value?: Values, attr?: Record<string, unknown>) {
@@ -10,7 +10,7 @@ class Create {
     if (typeof value === 'string') {
       this.element.innerHTML = value;
     }
-    parent ? (!(parent instanceof Create) ? parent.appendChild(this.element) : null) : undefined;
+    parent ? (!(parent instanceof CreateDOMElement) ? parent.appendChild(this.element) : null) : undefined;
     if (attr) {
       for (const key in attr) {
         this.element.setAttribute(key, <string>attr[key]);
@@ -18,13 +18,13 @@ class Create {
     }
   }
 
-  append(element: Create | Node | string) {
-    return element ? (!(element instanceof Create) ? this.element.append(element) : null) : undefined;
+  append(element: CreateDOMElement | Node | string) {
+    return element ? (!(element instanceof CreateDOMElement) ? this.element.append(element) : null) : undefined;
   }
 
   remove(element = this.element) {
-    return element ? (!(element instanceof Create) ? this.element.remove() : null) : undefined;
+    return element ? (!(element instanceof CreateDOMElement) ? this.element.remove() : null) : undefined;
   }
 }
 
-export default Create;
+export default CreateDOMElement;

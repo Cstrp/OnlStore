@@ -1,4 +1,4 @@
-import { Datum } from './inderface';
+import { Datum } from './Interface';
 
 export const makeUniq = (arr: Datum[]) => {
   return arr
