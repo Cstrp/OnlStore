@@ -27,7 +27,6 @@ class Modal extends CompTemple {
         max: 27,
       },
     });
-
     settingModal[0].btn.forEach((btn) => {
       new CreateDOMElement('button', '123', modalFooter, `${btn.save}`).element;
       new CreateDOMElement('button', '123', modalFooter, `${btn.cancel}`).element;
@@ -35,7 +34,7 @@ class Modal extends CompTemple {
     });
     settingModal[0].sortBtn.forEach((btn) => {
       new CreateDOMElement('option', '123', select, 'Sort by', { disabled: true }).element;
-      new CreateDOMElement('option', '123', select, `${btn.authors}`).element;
+      const authors = new CreateDOMElement('option', '123', select, `${btn.authors}`).element;
       new CreateDOMElement('option', '123', select, `${btn.genres}`).element;
       new CreateDOMElement('option', '123', select, `${btn.price}`).element;
     });

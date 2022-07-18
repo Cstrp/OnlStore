@@ -2,19 +2,7 @@ import CreateDOMElement from '../../../data/utils/CreateDOMElement';
 import { pageID } from '../../pages/app';
 import CompTemple from '../../template/compTemple';
 import style from './index.module.scss';
-
-interface IHeader {
-  wrapper: HTMLDivElement;
-  headerWrapper: HTMLDivElement;
-  headerLogo: HTMLDivElement;
-  headerLogoLink: HTMLLinkElement;
-  headerTitle: HTMLTitleElement;
-  headerNav: HTMLDListElement;
-  headerListItem: HTMLOListElement;
-  btnWrap: HTMLDivElement;
-  shop: HTMLDivElement;
-  shopCard: Element;
-}
+import { get } from '../../../data/utils/storage';
 
 const buttons = [
   { id: pageID.home, text: 'Home' },
@@ -22,21 +10,10 @@ const buttons = [
   { id: pageID.recommendation, text: 'Recommendation' },
 ];
 
-class Header extends CompTemple implements IHeader {
+class Header extends CompTemple {
   constructor(id: string, tag: string, className?: string) {
     super(id, tag, className);
   }
-
-  wrapper!: HTMLDivElement;
-  headerWrapper!: HTMLDivElement;
-  headerLogo!: HTMLDivElement;
-  headerLogoLink!: HTMLLinkElement;
-  headerTitle!: HTMLTitleElement;
-  headerNav!: HTMLDListElement;
-  headerListItem!: HTMLOListElement;
-  btnWrap!: HTMLDivElement;
-  shop!: HTMLDivElement;
-  shopCard!: Element;
 
   headerContent() {
     const wrapper = new CreateDOMElement('div', style.wrapper, this.element).element;
@@ -55,9 +32,8 @@ class Header extends CompTemple implements IHeader {
     });
     const btnWrap = new CreateDOMElement('div', style.btnWrap, headerWrapper).element;
     const shop = new CreateDOMElement('div', style.btnWrapShop, btnWrap).element;
-    if (Object !== null) {
-      new CreateDOMElement('div', `${style.btnWrapShopCouter} counter`, shop).element;
-    }
+    new CreateDOMElement('p', `${style.btnWrapShopCouter} counter`, shop).element;
+
     new CreateDOMElement('img', '123', shop, null, { src: `https://cdn-icons-png.flaticon.com/512/7625/7625953.png` })
       .element;
 

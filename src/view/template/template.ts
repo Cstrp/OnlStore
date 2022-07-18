@@ -1,9 +1,7 @@
 import create from '../../data/utils/CreateDOMElement.ts';
 import CreateDOMElement from '../../data/utils/CreateDOMElement.ts';
 import { Datum } from '../../data/utils/Interface';
-import { generateId } from '../../data/utils/randomID';
-import Footer from '../components/footer';
-import footer from '../components/footer';
+import error from '../pages/error';
 import style from './index.module.scss';
 import axios from 'axios';
 
@@ -43,56 +41,46 @@ abstract class Template {
       type: 'text',
     }).element;
     const searchData: () => Promise<void> = async () => {
-      try {
-        await axios
-          .get(`https://api.jikan.moe/v4/anime?q= + ${this.input.value}`, {
-            method: 'GET',
-            baseURL: 'https://api.jikan.moe/v4/manga',
-          })
-          .then((response): void => {
-            const container = new CreateDOMElement(
-              'div',
-              `${style.wrapperResult} ${Template.defaultClass}`,
-              wrapper,
-              null
-            ).element;
-            const data = response.data.data;
-            const makeUniq = (arr: Datum[]) => {
-              return arr.filter((el, id: number) => arr.indexOf(el) - id === 0);
-            };
-            makeUniq(data).map((el) => {
-              const card = new CreateDOMElement('div', `${style.card}`, container).element;
-              const cardContent = new CreateDOMElement('div', style.cardContent, card).element;
-              new CreateDOMElement('img', style.cardImg, cardContent, null, {
-                src: `${el.images.jpg.large_image_url}`,
-                alt: `${el.title_japanese}`,
-                title: `${el.status}`,
-              }).element;
-              const textContent = new CreateDOMElement('div', style.cardTextContent, cardContent).element;
-              const cardLink = new CreateDOMElement('a', style.cardTextContentText, textContent, null, {
-                href: `${el.url}`,
-              }).element;
-              new CreateDOMElement('h2', style.cardTextContentText, cardLink, `${el.title}`).element;
-              if (el.genres[0].name === null) {
-                new create('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].type}`);
-              } else {
-                new CreateDOMElement('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].name}`)
-                  .element;
-              }
-              if (el.background === null) {
-                new CreateDOMElement('p', style.cardTextContentText, textContent, `${el.synopsis}`).element;
-              } else {
-                new CreateDOMElement('p', style.cardTextContentText, textContent, `${el.background}`).element;
-              }
-            });
+      await axios
+        .get(`https://api.jikan.moe/v4/anime?q= + ${this.input.value}`, { method: 'GET' })
+        .then((res) => {
+          const container = new CreateDOMElement(
+            'div',
+            `${style.wrapperResult} ${Template.defaultClass}`,
+            wrapper,
+            null
+          ).element;
+          const data = res.data.data;
+          data.forEach((el: Datum) => {
+            const card = new CreateDOMElement('div', `${style.card}`, container).element;
+            const cardContent = new CreateDOMElement('div', style.cardContent, card).element;
+            new CreateDOMElement('img', style.cardImg, cardContent, null, {
+              src: `${el.images.jpg.large_image_url}`,
+              alt: `${el.title_japanese}`,
+              title: `${el.status}`,
+            }).element;
+            const textContent = new CreateDOMElement('div', style.cardTextContent, cardContent).element;
+            const cardLink = new CreateDOMElement('a', style.cardTextContentText, textContent, null, {
+              href: `${el.url}`,
+            }).element;
+            new CreateDOMElement('h2', style.cardTextContentText, cardLink, `${el.title}`).element;
+            if (el.genres[0].name === null) {
+              new create('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].type}`);
+            } else {
+              new CreateDOMElement('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].name}`).element;
+            }
+            if (el.background === null) {
+              new CreateDOMElement('p', style.cardTextContentText, textContent, `${el.synopsis}`).element;
+            } else {
+              new CreateDOMElement('p', style.cardTextContentText, textContent, `${el.background}`).element;
+            }
           });
-      } catch (error) {
-        throw new Error(`Ops... ${error}`);
-      }
+        })
+        .catch((error) => console.log(error));
     };
     this.input.addEventListener('keypress', (evt: KeyboardEvent) => {
       if (evt.key === 'Enter') {
-        searchData();
+        searchData().catch((err) => console.log(err));
       }
       const defaultClass = document.querySelector(`.${Template.defaultClass}`);
       if (defaultClass) {
@@ -105,7 +93,7 @@ abstract class Template {
     button.addEventListener('click', (evt) => {
       evt.preventDefault();
       this.input.value;
-      searchData();
+      searchData().catch((err) => console.log(err));
       const defaultClass = document.querySelector(`.${Template.defaultClass}`);
       if (defaultClass) {
         defaultClass.remove();

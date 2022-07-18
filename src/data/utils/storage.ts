@@ -1,4 +1,4 @@
-export const set = (name: string, value: string | boolean | number) => {
+export const set = (name: string, value: string | boolean | number | HTMLImageElement) => {
   window.localStorage.setItem(name, JSON.stringify(value));
 };
 

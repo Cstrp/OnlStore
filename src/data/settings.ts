@@ -1,6 +1,4 @@
-const cleanLocalStorage = (): void => {
-  localStorage.clear();
-};
+import { clean } from './utils/storage';
 
 export const settingModal = [
   {
@@ -11,7 +9,7 @@ export const settingModal = [
         cancel: 'Cancel',
         reset: 'Reset',
         close: 'Close',
-        cleanLocalStorage, // reset local storage
+        clean, // reset local storage
       },
     ],
     sortBtn: [

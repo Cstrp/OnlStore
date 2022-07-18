@@ -1,6 +1,6 @@
 import axios from 'axios';
 import CreateDOMElement from '../../../data/utils/CreateDOMElement';
-import { makeUniq } from '../../../data/utils/makeUniq';
+import { Datum, RootObject } from '../../../data/utils/Interface';
 import { get, remove, set } from '../../../data/utils/storage';
 import Modal from '../../components/modal';
 import Template from '../../template/template';
@@ -16,7 +16,7 @@ class Home extends Template {
     super(id, tag, className);
   }
 
-  mainContent() {
+  async mainContent<T>() {
     const section = new CreateDOMElement('section', style.section, this.element).element;
     const wrapper = new CreateDOMElement('div', style.wrapper, section).element;
     const titleWrapper = new CreateDOMElement('div', style.tittleWrapper, wrapper).element;
@@ -29,61 +29,115 @@ class Home extends Template {
       'All the best manga collected for you in one place'
     ).element;
     const contentWrapper = new CreateDOMElement('div', style.contentWrapper, wrapper).element;
-    const fetchData: () => Promise<void> = async () => {
-      axios.get('https://api.jikan.moe/v4/manga', { method: 'GET' }).then((res) => {
+    await axios
+      .get('https://api.jikan.moe/v4/manga', { method: 'GET' })
+      .then((res) => {
         const data = res.data.data;
-        makeUniq(data).forEach((el) => {
-          const card = new CreateDOMElement('div', `${style.card}`, contentWrapper, null).element;
-          const cardItem = new CreateDOMElement('div', style.cardItem, card).element;
-          new CreateDOMElement('img', style.cardImg, cardItem, null, {
-            src: `${el.images.jpg.large_image_url}`,
-            alt: `${el.authors[0].name}`,
-            title: `${el.synopsis}`,
+        const dataAttr = data.map((item: Datum) => {
+          return {
+            mal_id: item.mal_id,
+            title: item.title.slice(0, 15),
+            images: item.images,
+            authors: item.authors,
+            status: item.status,
+            genres: item.genres,
+            synopsis: item.synopsis,
+            url: item.url,
+            published: item.published.string.replace('to ?', 'to now days'),
+            members: Math.floor(item.members / 123),
+          };
+        });
+        const cardWrapper = new CreateDOMElement('div', `${style.card}`, contentWrapper).element;
+        dataAttr.forEach((item: Datum) => {
+          const card = new CreateDOMElement('div', style.cardItem, cardWrapper, null, { id: `${item.mal_id}` }).element;
+          const cardHeader = new CreateDOMElement('div', `${style.cardItem}`, card).element;
+          const cardBody = new CreateDOMElement('div', `${style.cardItem}`, card).element;
+          const cardFooter = new CreateDOMElement('div', style.other, card).element;
+          const cardLink = new CreateDOMElement('a', `${style.cardLink}`, cardHeader).element;
+          new CreateDOMElement('h2', `${style.cardTitle}`, cardLink, `${item.title}`).element;
+          new CreateDOMElement('img', `${style.cardImg}`, cardBody, null, {
+            src: `${item.images.jpg.image_url}`,
+            alt: `${item.authors}`,
+            title: `${item.synopsis}`,
           }).element;
-          const cardLink = new CreateDOMElement('a', style.cardLink, cardItem, null, { href: `${el.url}` }).element;
-          new CreateDOMElement('h2', style.cardTitle, cardLink, `${el.title}`).element;
-          const content = new CreateDOMElement('div', style.cardContent, card).element;
-          const genre = new CreateDOMElement('div', style.cardContentGenre, content, null).element;
-          const otherContent = new CreateDOMElement('div', style.cardContentGenreOther, genre).element;
-          const genreLink = new CreateDOMElement('a', style.cardContentP, otherContent, null, {
-            href: `${el.authors[0].url}`,
+          const authorLink = new CreateDOMElement('a', `${style.cardContentP}`, cardBody, null, {
+            href: `${item.authors[0].url}`,
           }).element;
-          new CreateDOMElement('p', style.cardContentP, genreLink, `${el.authors[0].name}`).element;
-          new CreateDOMElement('p', style.cardContentP, otherContent, `Genre: ${el.genres[0].name}`).element;
-          new CreateDOMElement(
-            'p',
-            style.cardContentP,
-            otherContent,
-            `${el.published.string.replace('to ?', 'to now day')}`
-          ).element;
-          const other = new CreateDOMElement('div', style.other, card).element;
-          const img = new CreateDOMElement('div', style.otherImg, other, null).element;
-          const image: HTMLImageElement = <HTMLImageElement>(
-            new CreateDOMElement('img', `${style.otherImg}`, img, null, {
-              src: 'https://www.svgrepo.com/show/13666/heart.svg',
-              title: 'Add to cart',
+          new CreateDOMElement('p', `${style.cardContentP}`, authorLink, `Author: ${item.authors[0].name}`).element;
+          new CreateDOMElement('p', `${style.cardContentP}`, cardBody, `Genre: ${item.genres[0].name}`).element;
+          new CreateDOMElement('p', `${style.cardContentP}`, cardBody, `Release: ${item.published}`).element;
+          const addToCart: HTMLImageElement = <HTMLImageElement>(
+            new CreateDOMElement('img', `${style.otherImg}`, cardFooter, null, {
+              src: `https://www.svgrepo.com/show/13666/heart.svg`,
+              title: `Add to cart`,
             }).element
           );
-          const shopCart: HTMLDivElement = <HTMLDivElement>document.querySelector('.counter');
-          [image].forEach((el) => {
-            el.onclick = (evt) => {
+          const counter: HTMLDivElement = <HTMLDivElement>document.querySelector('.counter');
+          [addToCart].forEach((elem) => {
+            elem.onclick = (evt) => {
               evt.preventDefault();
+              // get('counter');
+              // get('activeImage');
+              // add image class to local storage
+
+              const activeImage = get('activeImage');
               get('counter');
-              el.classList.toggle(style.otherImgActive);
-              if (el.classList.contains(style.otherImgActive) && shopCart) {
-                set('counter', (shopCart.innerHTML = `${Number(shopCart.innerHTML) + 1}`));
+              elem.classList.toggle(style.otherImgActive);
+              if (elem.classList.contains(style.otherImgActive)) {
+                set('counter', (counter.innerHTML = `${Number(counter.innerHTML) + 1}`));
               } else {
-                set('counter', (shopCart.innerHTML = `${Number(shopCart.innerHTML) - 1}`));
+                set('counter', (counter.innerHTML = `${Number(counter.innerHTML) - 1}`));
               }
-              console.log(get('counter'));
+
+              // if (counters) {
+              //   set('counter', counters + 1);
+              // } else {
+              //   set('counter', 1);
+              // }
+              // if (activeImage) {
+              //   set('activeImage', activeImage + 1);
+              // } else {
+              //   set('activeImage', 1);
+              // }
+              //
+              // if (activeImage && counters != null) {
+              //   set('counter', (counter.innerHTML = `${Number(counter.innerHTML) + 1}`));
+              //   set('activeImage', item.mal_id);
+              // } else {
+              //   set('counter', (counter.innerHTML = `${Number(counter.innerHTML) - 1}`));
+              //   set('activeImage', item.mal_id);
+              // }
+
+              // elem.classList.toggle(style.otherImgActive);
+              // if (elem.classList.contains(style.otherImgActive) && get('activeImage') != null) {
+              //   set('counter', (counter.innerHTML = `${Number(counter.innerHTML) + 1}`));
+              // } else {
+              //   set('counter', (counter.innerHTML = `${Number(counter.innerHTML) - 1}`));
+              // }
             };
           });
-          const price = new CreateDOMElement('div', style.otherPrice, other).element;
-          new CreateDOMElement('p', style.otherPrice, price, `¥ ${Math.floor(<number>el.members / 123)}`).element;
+          const price = new CreateDOMElement('p', `${style.otherPrice}`, cardFooter, `Price: ¥ ${item.members}`)
+            .element;
+          const result = get('counter');
+          if (result && result != null && result != '0') {
+            // counter.innerHTML = Number(result);
+            // counter.innerHTML = `${result}`;
+            // counter.innerHTML = result;
+            counter.innerHTML = result.toString();
+          } else {
+            counter.innerHTML = '0';
+          }
+
+          // const result = get('counter');
+          // if (result) {
+          //   counter.innerHTML = `${String(result)}`;
+          // }
+          // if (result != null) {
+          //   counter.innerHTML = result;
+          // }
         });
-      });
-    };
-    fetchData().catch((err) => console.log(err));
+      })
+      .catch((error) => console.log(error));
   }
 
   settings() {
