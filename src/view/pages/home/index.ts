@@ -1,10 +1,12 @@
 import axios from 'axios';
 import CreateDOMElement from '../../../data/utils/CreateDOMElement';
 import { Datum, RootObject } from '../../../data/utils/Interface';
+import generateId from "../../../data/utils/randomID";
 import { get, remove, set } from '../../../data/utils/storage';
 import Modal from '../../components/modal';
 import Template from '../../template/template';
 import style from './index.module.scss';
+import Footer from "../../components/footer";
 
 class Home extends Template {
   static TitleObj = {
@@ -152,13 +154,15 @@ class Home extends Template {
     setting.addEventListener('click', () => {
       modal.classList(style.modalWrapperAtcive);
     });
+    
   }
 
-  render() {
+   render() {
     this.Content(Home.TitleObj.title, Home.TitleObj.subTitle);
     this.settings();
     this.mainContent();
     return this.element;
+
   }
 }
 

@@ -1,6 +1,5 @@
-import { get, set } from '../../../data/utils/storage';
+import {get, set} from '../../../data/utils/storage';
 import generateId from '../../../data/utils/randomID';
-import Footer from '../../components/footer';
 import Header from '../../components/header';
 import Template from '../../template/template';
 import Character from '../character';
@@ -8,6 +7,7 @@ import Error from '../error';
 import Home from '../home/index';
 import Recommendation from '../recommendation';
 import style from './index.module.scss';
+import Footer from '../../components/footer/index';
 
 export const enum pageID {
   home = '/home',
@@ -17,12 +17,12 @@ export const enum pageID {
 
 class App {
   private static element: HTMLElement = document.body;
-  private static defaultPageID: string = 'defaultID';
+  private static staticID: string = 'staticID';
   private header: Header;
   private footer: Footer;
-
+  
   static renderPage(id: string) {
-    const defaultPage = document.querySelector(`#${App.defaultPageID}`);
+    const defaultPage = document.querySelector(`#${App.staticID}`);
     if (defaultPage) {
       defaultPage.remove();
     }
@@ -43,17 +43,17 @@ class App {
     }
     if (page) {
       const HTML = page.render();
-      HTML.id = App.defaultPageID;
+      HTML.id = App.staticID;
       App.element.append(HTML);
     }
   }
-
+  
   constructor() {
     this.header = new Header(generateId(), 'header', style.header);
     App.element.classList.add(style.body);
     this.footer = new Footer(generateId(), 'footer', style.footer);
   }
-
+  
   private router() {
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash.replace('#', '/').slice(1);
@@ -65,13 +65,13 @@ class App {
       }
     });
   }
-
+  
   private StoragePage() {
     const storage = get('page');
     if (storage) {
       App.renderPage(storage);
     } else {
-      App.renderPage(App.defaultPageID);
+      App.renderPage(App.staticID);
     }
     window.addEventListener('load', () => {
       const hash = window.location.hash.slice(1);
@@ -80,17 +80,23 @@ class App {
     window.addEventListener('beforeunload', () => {
       set('page', window.location.hash.slice(1));
     });
-    console.log(get('counter'));
   }
-
+  
   render() {
     this.router();
     this.StoragePage();
     App.element.append(this.header.render());
     App.renderPage(pageID.home);
-    // new Promise((resolve, reject) => {
-    //   reject();
-    // }).then(() => App.element.append(this.footer.render()));
+   // render footer all pages and remove copy
+    window.addEventListener('hashchange', ()=>{
+      App.element.append(this.footer.render())
+    })
+    const footer = document.querySelector(Footer.def)
+    if (footer) {
+      footer.remove()
+    }
+    return App.element;
+    
   }
 }
 
