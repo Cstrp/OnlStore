@@ -1,5 +1,4 @@
 import axios from 'axios';
-import * as stream from 'stream';
 import Create from '../../../data/utils/create';
 import { makeUniq } from '../../../data/utils/makeUniq';
 import { get, remove, set } from '../../../data/utils/storage';

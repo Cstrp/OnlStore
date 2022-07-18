@@ -11,5 +11,5 @@ export const remove = (name: string) => {
 };
 
 export const clean = () => {
-  localStorage.clear();
+  window.localStorage.clear();
 };

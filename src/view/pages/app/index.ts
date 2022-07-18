@@ -1,5 +1,5 @@
-import { generateId } from '../../../data/utils/randomID';
 import { get, set } from '../../../data/utils/storage';
+import generateId from '../../../data/utils/randomID';
 import Footer from '../../components/footer';
 import Header from '../../components/header';
 import Template from '../../template/template';
