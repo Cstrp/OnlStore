@@ -58,7 +58,7 @@ class App {
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash.replace('#', '/').slice(1);
       if (hash !== pageID.home && hash !== pageID.characters && hash !== pageID.recommendation) {
-        const error = new Error(generateId(), 'main', style.error);
+        const error = new Error(generateId(), 'div', style.error);
         App.element.append(error.render());
       } else {
         App.renderPage(hash);
@@ -87,14 +87,9 @@ class App {
     this.StoragePage();
     App.element.append(this.header.render());
     App.renderPage(pageID.home);
-   // render footer all pages and remove copy
     window.addEventListener('hashchange', ()=>{
       App.element.append(this.footer.render())
     })
-    const footer = document.querySelector(Footer.def)
-    if (footer) {
-      footer.remove()
-    }
     return App.element;
     
   }

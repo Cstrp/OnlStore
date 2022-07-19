@@ -2,6 +2,7 @@ import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 import { settingModal } from '../../../data/settings';
 import CreateDOMElement, { Values } from '../../../data/utils/CreateDOMElement';
+import {clean} from "../../../data/utils/storage";
 import CompTemple from '../../template/compTemple';
 import style from './index.module.scss';
 
@@ -30,7 +31,10 @@ class Modal extends CompTemple {
     settingModal[0].btn.forEach((btn) => {
       new CreateDOMElement('button', '123', modalFooter, `${btn.save}`).element;
       new CreateDOMElement('button', '123', modalFooter, `${btn.cancel}`).element;
-      new CreateDOMElement('button', '123', modalFooter, `${btn.reset}`).element;
+      const reset = new CreateDOMElement('button', '123', modalFooter, `${btn.reset}`).element;
+      reset.addEventListener('click', ()=>{
+        clean()
+      })
     });
     settingModal[0].sortBtn.forEach((btn) => {
       new CreateDOMElement('option', '123', select, 'Sort by', { disabled: true }).element;

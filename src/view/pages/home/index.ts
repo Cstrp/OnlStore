@@ -90,7 +90,7 @@ class Home extends Template {
             .element;
           const result = get('counter');
           if (result && result != null && result != '0') {
-            counter.innerHTML = result.toString();
+            counter.innerHTML = String(Number(result));
           } else {
             counter.innerHTML = '0';
           }
