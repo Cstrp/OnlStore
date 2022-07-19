@@ -1,23 +1,21 @@
 import axios from 'axios';
 import CreateDOMElement from '../../../data/utils/CreateDOMElement';
-import { Datum, RootObject } from '../../../data/utils/Interface';
-import generateId from "../../../data/utils/randomID";
-import { get, remove, set } from '../../../data/utils/storage';
+import {Datum} from '../../../data/utils/Interface';
+import {get, set} from '../../../data/utils/storage';
 import Modal from '../../components/modal';
 import Template from '../../template/template';
 import style from './index.module.scss';
-import Footer from "../../components/footer";
 
 class Home extends Template {
   static TitleObj = {
     title: 'Welcome dear travel',
     subTitle: 'Browse all your favorite Manga, and view their rankings in realtime',
   };
-
+  
   constructor(id: string, tag: string, className?: string) {
     super(id, tag, className);
   }
-
+  
   async mainContent<T>() {
     const section = new CreateDOMElement('section', style.section, this.element).element;
     const wrapper = new CreateDOMElement('div', style.wrapper, section).element;
@@ -32,7 +30,7 @@ class Home extends Template {
     ).element;
     const contentWrapper = new CreateDOMElement('div', style.contentWrapper, wrapper).element;
     await axios
-      .get('https://api.jikan.moe/v4/manga', { method: 'GET' })
+      .get('https://api.jikan.moe/v4/manga', {method: 'GET'})
       .then((res) => {
         const data = res.data.data;
         const dataAttr = data.map((item: Datum) => {
@@ -51,7 +49,7 @@ class Home extends Template {
         });
         const cardWrapper = new CreateDOMElement('div', `${style.card}`, contentWrapper).element;
         dataAttr.forEach((item: Datum) => {
-          const card = new CreateDOMElement('div', style.cardItem, cardWrapper, null, { id: `${item.mal_id}` }).element;
+          const card = new CreateDOMElement('div', style.cardItem, cardWrapper, null, {id: `${item.mal_id}`}).element;
           const cardHeader = new CreateDOMElement('div', `${style.cardItem}`, card).element;
           const cardBody = new CreateDOMElement('div', `${style.cardItem}`, card).element;
           const cardFooter = new CreateDOMElement('div', style.other, card).element;
@@ -78,10 +76,6 @@ class Home extends Template {
           [addToCart].forEach((elem) => {
             elem.onclick = (evt) => {
               evt.preventDefault();
-              // get('counter');
-              // get('activeImage');
-              // add image class to local storage
-
               const activeImage = get('activeImage');
               get('counter');
               elem.classList.toggle(style.otherImgActive);
@@ -90,58 +84,21 @@ class Home extends Template {
               } else {
                 set('counter', (counter.innerHTML = `${Number(counter.innerHTML) - 1}`));
               }
-
-              // if (counters) {
-              //   set('counter', counters + 1);
-              // } else {
-              //   set('counter', 1);
-              // }
-              // if (activeImage) {
-              //   set('activeImage', activeImage + 1);
-              // } else {
-              //   set('activeImage', 1);
-              // }
-              //
-              // if (activeImage && counters != null) {
-              //   set('counter', (counter.innerHTML = `${Number(counter.innerHTML) + 1}`));
-              //   set('activeImage', item.mal_id);
-              // } else {
-              //   set('counter', (counter.innerHTML = `${Number(counter.innerHTML) - 1}`));
-              //   set('activeImage', item.mal_id);
-              // }
-
-              // elem.classList.toggle(style.otherImgActive);
-              // if (elem.classList.contains(style.otherImgActive) && get('activeImage') != null) {
-              //   set('counter', (counter.innerHTML = `${Number(counter.innerHTML) + 1}`));
-              // } else {
-              //   set('counter', (counter.innerHTML = `${Number(counter.innerHTML) - 1}`));
-              // }
             };
           });
           const price = new CreateDOMElement('p', `${style.otherPrice}`, cardFooter, `Price: ¥ ${item.members}`)
             .element;
           const result = get('counter');
           if (result && result != null && result != '0') {
-            // counter.innerHTML = Number(result);
-            // counter.innerHTML = `${result}`;
-            // counter.innerHTML = result;
             counter.innerHTML = result.toString();
           } else {
             counter.innerHTML = '0';
           }
-
-          // const result = get('counter');
-          // if (result) {
-          //   counter.innerHTML = `${String(result)}`;
-          // }
-          // if (result != null) {
-          //   counter.innerHTML = result;
-          // }
         });
       })
       .catch((error) => console.log(error));
   }
-
+  
   settings() {
     const section = new CreateDOMElement('section', style.settingsSection, this.element).element;
     const wrapper = new CreateDOMElement('div', style.wrapper, section).element;
@@ -156,13 +113,13 @@ class Home extends Template {
     });
     
   }
-
-   render() {
+  
+  render() {
     this.Content(Home.TitleObj.title, Home.TitleObj.subTitle);
     this.settings();
     this.mainContent();
     return this.element;
-
+    
   }
 }
 

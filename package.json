@@ -22,8 +22,8 @@
     "deploy": "gh-pages -d dist",
     "clean": "rm -rf dist",
     "test": "jest",
-    "lint": "eslint --ext js,jsx,ts,tsx src",
-    "lint-fix": "eslint --ext js,jsx,ts,tsx src --fix"
+    "lint": "eslint --ext js,jsx,ts,tsx ./src",
+    "lint-fix": "eslint --ext js,jsx,ts,tsx ./src --fix"
   },
   "keywords": [],
   "author": "",
