@@ -88,12 +88,12 @@ class Home extends Template {
           });
           const price = new CreateDOMElement('p', `${style.otherPrice}`, cardFooter, `Price: ¥ ${item.members}`)
             .element;
-          const result = get('counter');
-          if (result && result != null && result != '0') {
-            counter.innerHTML = String(Number(result));
-          } else {
-            counter.innerHTML = '0';
-          }
+          
+          // if (result && result != null && result != '0') {
+          //   counter.innerHTML = String(Number(result));
+          // } else {
+          //   counter.innerHTML = '0';
+          // }
         });
       })
       .catch((error) => console.log(error));
