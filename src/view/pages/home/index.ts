@@ -49,7 +49,10 @@ class Home extends Template {
         });
         const cardWrapper = new CreateDOMElement('div', `${style.card}`, contentWrapper).element;
         dataAttr.forEach((item: Datum) => {
-          const card = new CreateDOMElement('div', style.cardItem, cardWrapper, null, {id: `${item.mal_id}`}).element;
+          const card: HTMLElement = <HTMLElement>new CreateDOMElement('div', style.cardItem, cardWrapper, null, {id: `${item.mal_id}`}).element;
+          [card].forEach((elem)=>{
+          
+          })
           const cardHeader = new CreateDOMElement('div', `${style.cardItem}`, card).element;
           const cardBody = new CreateDOMElement('div', `${style.cardItem}`, card).element;
           const cardFooter = new CreateDOMElement('div', style.other, card).element;
@@ -86,9 +89,9 @@ class Home extends Template {
               }
             };
           });
+      
           const price = new CreateDOMElement('p', `${style.otherPrice}`, cardFooter, `Price: ¥ ${item.members}`)
             .element;
-          
           // if (result && result != null && result != '0') {
           //   counter.innerHTML = String(Number(result));
           // } else {

@@ -25,7 +25,10 @@ module.exports = {
   }, {}),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: 'assets/[hash][ext][query]',
+    assetModuleFilename: pathData => {
+      const filePath = path.dirname(pathData.filename).split('/').slice(1).join('/');
+      return `${filePath}/[name][ext]`
+    },
     clean: true,
   },
   resolve: {

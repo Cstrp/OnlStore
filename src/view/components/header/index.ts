@@ -2,7 +2,6 @@ import CreateDOMElement from '../../../data/utils/CreateDOMElement';
 import { pageID } from '../../pages/app';
 import CompTemple from '../../template/compTemple';
 import style from './index.module.scss';
-import { get } from '../../../data/utils/storage';
 
 const buttons = [
   { id: pageID.home, text: 'Home' },

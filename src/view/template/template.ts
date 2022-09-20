@@ -1,6 +1,5 @@
-import create from '../../data/utils/CreateDOMElement.ts';
 import CreateDOMElement from '../../data/utils/CreateDOMElement.ts';
-import {Datum} from '../../data/utils/Interface';
+import { Datum } from '../../data/utils/Interface';
 import style from './index.module.scss';
 import axios from 'axios';
 
@@ -9,7 +8,7 @@ abstract class Template {
   protected input!: HTMLInputElement;
   private static defaultClass: string = 'defaultClass';
   static TextContent = {};
-  
+
   protected constructor(id: string, tag: string, className?: string) {
     this.element = document.createElement(tag);
     this.element.id = id;
@@ -17,7 +16,7 @@ abstract class Template {
       this.element.classList.add(...className.split(' '));
     }
   }
-  
+
   protected Content(text: string, subtext?: string) {
     const up: HTMLDivElement = new CreateDOMElement('div', style.up, this.element).element;
     const upLink: HTMLLinkElement = new CreateDOMElement('a', style.upLink, up).element;
@@ -41,7 +40,7 @@ abstract class Template {
     }).element;
     const searchData: () => Promise<void> = async () => {
       await axios
-        .get(`https://api.jikan.moe/v4/anime?q= + ${this.input.value}`, {method: 'GET'})
+        .get(`https://api.jikan.moe/v4/anime?q= + ${this.input.value}`, { method: 'GET' })
         .then((res) => {
           const container = new CreateDOMElement(
             'div',
@@ -64,7 +63,7 @@ abstract class Template {
             }).element;
             new CreateDOMElement('h2', style.cardTextContentText, cardLink, `${el.title}`).element;
             if (el.genres[0].name === null) {
-              new create('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].type}`);
+              new CreateDOMElement('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].type}`);
             } else {
               new CreateDOMElement('p', style.cardTextContentText, textContent, `Genre: ${el.genres[0].name}`).element;
             }
@@ -98,10 +97,8 @@ abstract class Template {
         defaultClass.remove();
       }
     });
-    
   }
-  
-  
+
   render() {
     return this.element;
   }

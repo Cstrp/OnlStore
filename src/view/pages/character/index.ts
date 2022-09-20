@@ -1,7 +1,6 @@
 import axios from 'axios';
 import CreateDOMElement from '../../../data/utils/CreateDOMElement';
 import Template from '../../template/template';
-import error from '../error';
 import style from './index.module.scss';
 
 class Character extends Template {

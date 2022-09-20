@@ -19,7 +19,7 @@ class Modal extends CompTemple {
     const modalFooter = new CreateDOMElement('div', style.modalWrapperFooter, modalWrapper).element;
     const select = new CreateDOMElement('select', '123', modalFooter).element;
     new CreateDOMElement('button', '123', modalFooter, `${settingModal[0].btn[0].close}`).element;
-    const slider = new CreateDOMElement('div', '123', modalBody).element;
+    const slider = new CreateDOMElement('div', 'slider', modalBody).element;
     noUiSlider.create(<never>slider, {
       start: [0, 27],
       connect: true,
